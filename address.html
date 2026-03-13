@@ -298,6 +298,23 @@
     font-family: var(--mono); font-size: 11px; color: var(--muted2);
     line-height: 1.7;
   }
+  .last-updated {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    margin-bottom: 16px; padding: 8px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+  }
+  .refresh-btn {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--grad1); cursor: pointer;
+    background: none; border: 1px solid rgba(79,138,255,0.3);
+    border-radius: 6px; padding: 3px 10px;
+    transition: all 0.2s;
+  }
+  .refresh-btn:hover { background: rgba(79,138,255,0.1); }
+  .refresh-btn:disabled { color: var(--muted2); border-color: var(--glass-border); cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -412,6 +429,10 @@ function showError(msg) {
 function showLoading(address) {
   document.title = shortAddr(address) + ' | CryptoToucan';
   document.getElementById('main-content').innerHTML = `
+    <div class="last-updated">
+      <span>⏱ Data: ${ageText}</span>
+      ${canRefresh ? '<button class="refresh-btn" onclick="refreshWallet()">↻ Refresh</button>' : '<span style="color:var(--muted2);font-size:10px;">Refresh available in ' + (5 - Math.floor(ageMs/60000)) + ' min</span>'}
+    </div>
     <div class="section">
       <div class="addr-header">
         <div class="ens-name" style="font-size:14px; color:var(--muted);">Loading…</div>
@@ -436,6 +457,14 @@ function showLoading(address) {
 function render(data) {
   const addr = data.address;
   const displayName = data.ensName || shortAddr(addr);
+
+  // Last updated bar
+  const updatedAt = window._updatedAt || Date.now();
+  const ageMs = Date.now() - updatedAt;
+  const ageMins = Math.floor(ageMs / 60000);
+  const ageText = ageMins < 1 ? 'just now' : ageMins === 1 ? '1 min ago' : ageMins + ' mins ago';
+  const canRefresh = ageMs > 5 * 60 * 1000; // 5 min cooldown
+  window._updatedAt = updatedAt;
 
   // Update SEO with resolved ENS name if available
   const seoName = data.ensName || (addr.slice(0, 6) + '...' + addr.slice(-4));
@@ -511,6 +540,10 @@ function render(data) {
     : `<div style="color:var(--muted);font-size:13px;">No assets detected.</div>`;
 
   document.getElementById('main-content').innerHTML = `
+    <div class="last-updated">
+      <span>⏱ Data: ${ageText}</span>
+      ${canRefresh ? '<button class="refresh-btn" onclick="refreshWallet()">↻ Refresh</button>' : '<span style="color:var(--muted2);font-size:10px;">Refresh available in ' + (5 - Math.floor(ageMs/60000)) + ' min</span>'}
+    </div>
     <!-- ADDRESS HEADER -->
     <div class="section">
       <div class="addr-header">
@@ -637,6 +670,7 @@ function render(data) {
 
   // Store data for share/prompt functions
   window._walletData = data;
+  if (!window._updatedAt) window._updatedAt = Date.now();
   // Populate prompt textarea
   setTimeout(() => {
     const box = document.getElementById('promptBox');
@@ -692,6 +726,8 @@ async function main() {
       return;
     }
 
+    window._walletData = data;
+    window._updatedAt = data._updatedAt || Date.now();
     render(data);
   } catch (e) {
     showError('Failed to load wallet data. Please try again.');
@@ -719,6 +755,25 @@ Please analyze:
 2. What does their activity pattern look like?
 3. Any notable patterns or risks?
 4. Explain in simple, non-technical language.`;
+}
+
+function refreshWallet() {
+  const path = window.location.pathname;
+  const match = path.match(/\/address\/(.+)/);
+  if (!match) return;
+  const addr = match[1];
+  const WORKER = 'https://cryptoucan-api.winqi.workers.dev';
+  const btn = document.querySelector('.refresh-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '↻ Refreshing...'; }
+  fetch(WORKER + '/api/wallet/' + addr + '?refresh=1')
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { if (btn) { btn.disabled = false; btn.textContent = '↻ Refresh'; } return; }
+      window._walletData = data;
+      window._updatedAt = data._updatedAt || Date.now();
+      render(data);
+    })
+    .catch(() => { if (btn) { btn.disabled = false; btn.textContent = '↻ Refresh'; } });
 }
 
 function copyPrompt() {
