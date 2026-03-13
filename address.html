@@ -581,10 +581,12 @@ function render(data) {
     <!-- ASSET BREAKDOWN -->
     <div class="section">
       <div class="card">
-        <div class="card-title">📈 Asset Breakdown</div>
+        <div class="card-title" style="justify-content:space-between;align-items:center;">
+          <span>📈 Asset Breakdown</span>
+          ${data.tokenCount > 0 ? `<span style="font-family:var(--mono);font-size:11px;color:var(--muted2);font-weight:400;letter-spacing:0.03em;">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</span>` : ''}
+        </div>
         ${assetHTML}
-        <div style="margin-top:20px;text-align:center;line-height:1.8;">
-          ${data.tokenCount > 0 ? `<div style="font-family:var(--mono);font-size:11px;color:var(--muted2);">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</div>` : ''}
+        <div style="margin-top:20px;text-align:center;">
           <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
         </div>
       </div>
@@ -595,7 +597,7 @@ function render(data) {
       <div class="card">
         <div class="card-title">🔄 Notable Transactions</div>
         ${txHTML}
-        <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.04);text-align:center;">
+        <div style="margin-top:16px;padding-top:14px;text-align:center;">
           <a href="https://etherscan.io/txs?a=${addr}" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all transactions on Etherscan ↗</a>
         </div>
       </div>
@@ -604,12 +606,14 @@ function render(data) {
     <!-- AI PROMPT -->
     <div class="section">
       <div class="card">
-        <div class="card-title">📋 AI Analysis Prompt</div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.7;font-weight:300;">
-          Edit and copy into ChatGPT or Claude for a deeper analysis.
-        </p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div class="card-title" style="margin-bottom:0;">📋 AI Analysis Prompt</div>
+          <button class="btn-primary" id="copyBtn" onclick="copyPrompt()" style="padding:10px 20px;font-size:12px;">Copy &amp; Ask AI</button>
+        </div>
         <div id="promptBox" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:12px;padding:14px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7;outline:none;margin-bottom:12px;white-space:pre-wrap;word-break:break-word;user-select:text;" contenteditable="true" spellcheck="false"></div>
-        <button class="btn-primary" id="copyBtn" onclick="copyPrompt()">📋 Copy to Clipboard</button>
+        <p style="font-size:12px;color:var(--muted2);line-height:1.6;font-weight:300;font-family:var(--mono);text-align:center;">
+          Drop this into ChatGPT, Claude, or Gemini.
+        </p>
       </div>
     </div>
 
@@ -617,6 +621,7 @@ function render(data) {
     <div class="section">
       <div class="card">
         <div class="card-title">🔗 Share This Page</div>
+        <p style="font-size:12px;color:var(--muted2);font-family:var(--mono);line-height:1.7;margin-bottom:12px;">Blockchain data is public. Share this analysis with anyone.</p>
         <div class="share-row">
           <button class="btn-secondary" onclick="shareTwitter()">𝕏 Share on X</button>
           <button class="btn-secondary" onclick="copyLink()">📋 Copy Link</button>
@@ -784,9 +789,9 @@ function copyPrompt() {
   const text = box ? box.textContent : buildPrompt(window._walletData);
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.getElementById('copyBtn');
-    btn.textContent = '✅ Copied to clipboard!';
+    btn.textContent = 'Copied!';
     btn.classList.add('copied');
-    setTimeout(() => { btn.innerHTML = '📋 Copy to Clipboard'; btn.classList.remove('copied'); }, 2500);
+    setTimeout(() => { btn.textContent = 'Copy & Ask AI'; btn.classList.remove('copied'); }, 2500);
   });
 }
 
@@ -794,7 +799,7 @@ function shareTwitter() {
   const d = window._walletData;
   if (!d) return;
   const name = d.ensName || shortAddr(d.address);
-  const text = `Just analyzed ${name} on CryptoToucan 🦜\n\n💰 ${fmtUSD(d.ethUSD)}\n📅 ${fmtAge(d.walletAgeDays)} old wallet\n${d.activityStatus === 'dormant' ? '😴 Dormant' : '✅ Active'}\n\ncryptoucan.xyz/address/${d.address}`;
+  const text = `Just analyzed this Ethereum wallet on cryptoucan.xyz 🦜\n\n${name}\n💰 ${fmtUSD(d.ethUSD)}\n📅 ${fmtAge(d.walletAgeDays)} old · ${d.activityStatus}\n\ncryptoucan.xyz/address/${d.address}`;
   window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text), '_blank');
 }
 
