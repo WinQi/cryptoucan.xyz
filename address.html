@@ -429,10 +429,6 @@ function showError(msg) {
 function showLoading(address) {
   document.title = shortAddr(address) + ' | CryptoToucan';
   document.getElementById('main-content').innerHTML = `
-    <div class="last-updated">
-      <span>⏱ Data: ${ageText}</span>
-      ${canRefresh ? '<button class="refresh-btn" onclick="refreshWallet()">↻ Refresh</button>' : '<span style="color:var(--muted2);font-size:10px;">Refresh available in ' + (5 - Math.floor(ageMs/60000)) + ' min</span>'}
-    </div>
     <div class="section">
       <div class="addr-header">
         <div class="ens-name" style="font-size:14px; color:var(--muted);">Loading…</div>
@@ -458,13 +454,16 @@ function render(data) {
   const addr = data.address;
   const displayName = data.ensName || shortAddr(addr);
 
-  // Last updated bar
-  const updatedAt = window._updatedAt || Date.now();
+  // Last updated bar — use D1 timestamp if available
+  const updatedAt = data._updatedAt || window._updatedAt || Date.now();
+  window._updatedAt = updatedAt;
   const ageMs = Date.now() - updatedAt;
   const ageMins = Math.floor(ageMs / 60000);
-  const ageText = ageMins < 1 ? 'just now' : ageMins === 1 ? '1 min ago' : ageMins + ' mins ago';
+  const ageHours = Math.floor(ageMs / 3600000);
+  const ageText = ageMs < 60000 ? 'just now'
+    : ageMins < 60 ? ageMins + ' min' + (ageMins > 1 ? 's' : '') + ' ago'
+    : ageHours + ' hr' + (ageHours > 1 ? 's' : '') + ' ago';
   const canRefresh = ageMs > 5 * 60 * 1000; // 5 min cooldown
-  window._updatedAt = updatedAt;
 
   // Update SEO with resolved ENS name if available
   const seoName = data.ensName || (addr.slice(0, 6) + '...' + addr.slice(-4));
