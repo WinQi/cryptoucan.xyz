@@ -150,9 +150,10 @@
   /* SNAPSHOT GRID */
   .snap-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
   }
+  @media (max-width: 520px) { .snap-grid { grid-template-columns: 1fr 1fr; } }
   .snap-item {
     background: rgba(255,255,255,0.025);
     border: 1px solid var(--glass-border);
@@ -370,7 +371,7 @@ function timeAgo(isoDate) {
 function sinceDate(isoDate) {
   if (!isoDate) return '—';
   const d = new Date(isoDate);
-  return 'Since ' + d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  return 'Since ' + d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
 }
 function fmtAge(days) {
   if (!days) return '—';
@@ -472,6 +473,17 @@ function render(data) {
   const badgeClass = { active: 'badge-active', recent: 'badge-moderate', moderate: 'badge-moderate', dormant: 'badge-dormant', unknown: 'badge-dormant' }[data.activityStatus] || 'badge-dormant';
   const badgeLabel = { active: 'Active', recent: 'Recent', moderate: 'Moderate', dormant: 'Dormant', unknown: 'Unknown' }[data.activityStatus] || '—';
 
+  // Sent vs Received (from recent txs)
+  const sentCount = data.transactions.filter(tx => tx.type === 'out' || tx.type === 'contract').length;
+  const receivedCount = data.transactions.filter(tx => tx.type === 'in').length;
+
+  // Avg Gas per Tx
+  const txsWithGas = data.transactions.filter(tx => tx.gasETH > 0);
+  const avgGasRaw = txsWithGas.length > 0
+    ? txsWithGas.reduce((sum, tx) => sum + tx.gasETH, 0) / txsWithGas.length
+    : 0;
+  const avgGas = avgGasRaw > 0 ? avgGasRaw.toFixed(4) + ' ETH' : '—';
+
   // Title
   document.title = displayName + ' Wallet Analysis | CryptoToucan';
 
@@ -561,8 +573,8 @@ function render(data) {
           </div>
           <div class="snap-item">
             <div class="snap-label">Wallet Age</div>
-            <div class="snap-value">${fmtAge(data.walletAgeDays)}</div>
-            <div class="snap-sub">${sinceDate(data.firstTxDate)}</div>
+            <div class="snap-value">${sinceDate(data.firstTxDate)}</div>
+            <div class="snap-sub">${fmtAge(data.walletAgeDays)}</div>
           </div>
           <div class="snap-item">
             <div class="snap-label">Last Active</div>
@@ -570,9 +582,19 @@ function render(data) {
             <div class="snap-sub"><span class="badge ${badgeClass}">${badgeLabel}</span></div>
           </div>
           <div class="snap-item">
-            <div class="snap-label">Transactions</div>
-            <div class="snap-value">${data.sentTxCount ?? data.totalTxCount}</div>
-            <div class="snap-sub">${data.totalTxCount} total (incl. received)</div>
+            <div class="snap-label">Total Transactions</div>
+            <div class="snap-value">${(data.sentTxCount ?? data.totalTxCount).toLocaleString('en-US')}</div>
+            <div class="snap-sub">sent on-chain</div>
+          </div>
+          <div class="snap-item">
+            <div class="snap-label">Sent vs Received</div>
+            <div class="snap-value">${sentCount} / ${receivedCount}</div>
+            <div class="snap-sub">of last ${data.transactions.length} txs</div>
+          </div>
+          <div class="snap-item">
+            <div class="snap-label">Avg Gas per Tx</div>
+            <div class="snap-value">${avgGas}</div>
+            <div class="snap-sub">recent transactions</div>
           </div>
         </div>
       </div>
@@ -581,10 +603,8 @@ function render(data) {
     <!-- ASSET BREAKDOWN -->
     <div class="section">
       <div class="card">
-        <div class="card-title" style="justify-content:space-between;align-items:center;">
-          <span>📈 Asset Breakdown</span>
-          ${data.tokenCount > 0 ? `<span style="font-family:var(--mono);font-size:11px;color:var(--muted2);font-weight:400;letter-spacing:0.03em;">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</span>` : ''}
-        </div>
+        <div class="card-title">📈 Asset Breakdown</div>
+        ${data.tokenCount > 0 ? `<div style="font-family:var(--mono);font-size:11px;color:var(--muted2);margin-bottom:12px;">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</div>` : ''}
         ${assetHTML}
         <div style="margin-top:20px;text-align:center;">
           <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
