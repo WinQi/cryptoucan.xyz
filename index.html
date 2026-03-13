@@ -649,57 +649,57 @@
   <!-- FEATURED WALLETS -->
   <div class="fade-section">
     <div class="section-label">Notable wallets to explore</div>
-    <div class="recents">
-      <a href="/address/0xd8da6bf26964af9d7eed9e03e53415d37aa96045" class="recent-item">
-        <div class="recent-top">
-          <div class="recent-addr"><span class="ens">vitalik.eth</span></div>
-          <div class="recent-arrow">→</div>
-        </div>
-        <div class="recent-hex">0xd8dA...6045</div>
-        <div class="recent-role">Ethereum co-founder</div>
-      </a>
-      <a href="/address/0xbe0eb53f46cd790cd13851d5eff43d12404d33e8" class="recent-item">
-        <div class="recent-top">
-          <div class="recent-addr"><span class="ens">Binance</span></div>
-          <div class="recent-arrow">→</div>
-        </div>
-        <div class="recent-hex">0xBE0e...33E8</div>
-        <div class="recent-role">Binance hot wallet</div>
-      </a>
-      <a href="/address/0x47ac0fb4f2d84898e4d9e7b4dab3c24507a6d503" class="recent-item">
-        <div class="recent-top">
-          <div class="recent-addr"><span class="ens">Buterin Fund</span></div>
-          <div class="recent-arrow">→</div>
-        </div>
-        <div class="recent-hex">0x47ac...d503</div>
-        <div class="recent-role">Vitalik donation wallet</div>
-      </a>
-      <a href="/address/0xab5801a7d398351b8be11c439e05c5b3259aec9b" class="recent-item">
-        <div class="recent-top">
-          <div class="recent-addr"><span class="ens">0xab58...c9b</span></div>
-          <div class="recent-arrow">→</div>
-        </div>
-        <div class="recent-hex">0xab58...ec9b</div>
-        <div class="recent-role">Early ETH whale</div>
-      </a>
-      <a href="/address/0x00000000219ab540356cbb839cbe05303d7705fa" class="recent-item">
-        <div class="recent-top">
-          <div class="recent-addr"><span class="ens">ETH2 Deposit</span></div>
-          <div class="recent-arrow">→</div>
-        </div>
-        <div class="recent-hex">0x0000...05fa</div>
-        <div class="recent-role">ETH staking contract</div>
-      </a>
-      <a href="/address/0xf977814e90da44bfa03b6295a0616a897441acec" class="recent-item">
-        <div class="recent-top">
-          <div class="recent-addr"><span class="ens">Binance 8</span></div>
-          <div class="recent-arrow">→</div>
-        </div>
-        <div class="recent-hex">0xf977...cec</div>
-        <div class="recent-role">Binance cold wallet</div>
-      </a>
-    </div>
+    <div class="recents" id="notable-wallets"></div>
   </div>
+  <script>
+  (function() {
+    const FIXED = [
+      { name: 'vitalik.eth', addr: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', short: '0xd8dA...6045', role: 'Ethereum co-founder' },
+      { name: 'Binance Cold', addr: '0x28C6c06298d514Db089934071355E5743bf21d60', short: '0x28C6...1d60', role: 'Binance cold wallet' },
+      { name: 'ETH2 Deposit', addr: '0x00000000219ab540356cBB839Cbe05303d7705Fa', short: '0x0000...05Fa', role: 'ETH staking contract' },
+    ];
+
+    const POOL = [
+      { name: 'Coinbase', addr: '0x71660c4005BA85c37ccec55d0C4493E66Fe775d3', short: '0x7166...75d3', role: 'Coinbase hot wallet' },
+      { name: 'Kraken 3', addr: '0xE853c56864A2ebe4576a807D26Fdc4A0ada51919', short: '0xE853...1919', role: 'Kraken exchange' },
+      { name: 'Kraken 4', addr: '0x267be1C1D684F78cb4F6a176C4911b741E4Ffdc0', short: '0x267b...fdc0', role: 'Kraken exchange' },
+      { name: 'Bitfinex 2', addr: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', short: '0x742d...f44e', role: 'Bitfinex exchange' },
+      { name: 'Gemini 1', addr: '0xd24400ae8BFEBb18cA49Be86258a3C749cf46853', short: '0xd244...6853', role: 'Gemini exchange' },
+      { name: 'OKX 1', addr: '0x6cC5F688a315f3dC28A7781717a9A798a59fDA7b', short: '0x6cC5...DA7b', role: 'OKX exchange' },
+      { name: 'Gate.io', addr: '0x1C4b70a3968436B9A0a9cF5205c787eb81bb558c', short: '0x1C4b...558c', role: 'Gate.io exchange' },
+      { name: 'Binance 2', addr: '0xd551234ae421e3bcba99a0Da6d736074f22192ff', short: '0xd551...92ff', role: 'Binance exchange' },
+      { name: 'Binance 5', addr: '0xfe9e8709d3215310075d67E3ed32A380CCf451C8', short: '0xfe9e...51C8', role: 'Binance exchange' },
+      { name: 'WETH Contract', addr: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', short: '0xC02a...6Cc2', role: 'Wrapped ETH contract' },
+      { name: 'Uniswap V3', addr: '0xE592427A0AEce92De3Edee1F18E0157C05861564', short: '0xE592...1564', role: 'Uniswap V3 router' },
+      { name: 'Lido stETH', addr: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84', short: '0xae7a...Fe84', role: 'Lido staking contract' },
+      { name: 'Aave V3', addr: '0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2', short: '0x8787...A4E2', role: 'Aave V3 pool' },
+      { name: 'ETH Foundation', addr: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', short: '0xde0B...7BAe', role: 'Ethereum Foundation' },
+      { name: 'Grayscale ETHE', addr: '0xc55126051B22eBb829D00368f4B12Bde432de5Da', short: '0xc551...e5Da', role: 'Grayscale ETH fund' },
+      { name: 'Arbitrum Bridge', addr: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a', short: '0x8315...ed3a', role: 'Arbitrum L2 bridge' },
+      { name: 'Polygon Bridge', addr: '0x401F6c983eA34274ec46f84D70b31C151321188b', short: '0x401F...88b', role: 'Polygon L2 bridge' },
+      { name: 'Robinhood', addr: '0x40B38765696e3d5d8d9d834D8AaD4bB6e418E489', short: '0x40B3...E489', role: 'Robinhood exchange' },
+      { name: 'Buterin Fund', addr: '0x47ac0Fb4F2D84898e4D9E7b4DaB3C24507a6D503', short: '0x47ac...D503', role: 'Vitalik donation wallet' },
+      { name: 'BlackRock ETHA', addr: '0xf3b0073E3a7F747C7A38B36B805247B222C302A9', short: '0xf3b0...02A9', role: 'BlackRock ETH ETF' },
+    ];
+
+    // Pick 3 random from pool (no duplicates)
+    const shuffled = POOL.slice().sort(() => Math.random() - 0.5);
+    const random3 = shuffled.slice(0, 3);
+    const wallets = [...FIXED, ...random3];
+
+    const container = document.getElementById('notable-wallets');
+    container.innerHTML = wallets.map(w => `
+      <a href="/address/${w.addr.toLowerCase()}" class="recent-item">
+        <div class="recent-top">
+          <div class="recent-addr"><span class="ens">${w.name}</span></div>
+          <div class="recent-arrow">→</div>
+        </div>
+        <div class="recent-hex">${w.short}</div>
+        <div class="recent-role">${w.role}</div>
+      </a>
+    `).join('');
+  })();
+  </script>
 
   <div class="divider"></div>
 
