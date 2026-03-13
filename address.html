@@ -301,10 +301,7 @@
   .last-updated {
     display: flex; align-items: center; justify-content: space-between;
     font-family: var(--mono); font-size: 11px; color: var(--muted2);
-    margin-bottom: 16px; padding: 8px 12px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
+    margin-top: 10px;
   }
   .refresh-btn {
     font-family: var(--mono); font-size: 11px;
@@ -539,17 +536,17 @@ function render(data) {
     : `<div style="color:var(--muted);font-size:13px;">No assets detected.</div>`;
 
   document.getElementById('main-content').innerHTML = `
-    <div class="last-updated">
-      <span>⏱ Data: ${ageText}</span>
-      ${canRefresh ? '<button class="refresh-btn" onclick="refreshWallet()">↻ Refresh</button>' : '<span style="color:var(--muted2);font-size:10px;">Refresh available in ' + (5 - Math.floor(ageMs/60000)) + ' min</span>'}
-    </div>
     <!-- ADDRESS HEADER -->
     <div class="section">
       <div class="addr-header">
         <div class="ens-name">
-          <a href="https://etherscan.io/address/${addr}" target="_blank" rel="noopener" style="background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;word-break:break-all;">${data.ensName || addr}</a>
+          <a href="https://etherscan.io/address/${addr}" target="_blank" rel="noopener" style="background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;word-break:break-all;">${data.ensName || addr} ↗</a>
         </div>
         ${data.ensName ? '<div class="addr-full" style="margin-top:6px;word-break:break-all;"><a href="https://etherscan.io/address/' + addr + '" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;">' + addr + '</a></div>' : ''}
+      </div>
+      <div class="last-updated">
+        <span>Last updated: ${ageText}</span>
+        ${canRefresh ? '<button class="refresh-btn" onclick="refreshWallet()">↻ Refresh</button>' : ''}
       </div>
     </div>
 
@@ -586,10 +583,9 @@ function render(data) {
       <div class="card">
         <div class="card-title">📈 Asset Breakdown</div>
         ${assetHTML}
-        <div style="margin-top:20px;text-align:center;">
-          <span style="font-family:var(--mono);font-size:11px;color:var(--muted2);">
-            ${data.tokenCount > 0 ? `Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected · ` : ''}
-          </span><a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
+        <div style="margin-top:20px;text-align:center;line-height:1.8;">
+          ${data.tokenCount > 0 ? `<div style="font-family:var(--mono);font-size:11px;color:var(--muted2);">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</div>` : ''}
+          <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
         </div>
       </div>
     </div>
