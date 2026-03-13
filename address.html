@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wallet Analysis | CryptoToucan</title>
+<title>Ethereum Wallet Analysis | cryptoucan.xyz</title>
+<meta name="description" content="Analyze any Ethereum wallet address instantly. See ETH balance, token holdings, transaction history in plain English, wallet age and activity status — free, no sign-up.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" id="canonical-url" href="https://cryptoucan.xyz/address/">
+<meta property="og:site_name" content="cryptoucan.xyz">
+<meta property="og:type" content="website">
+<meta id="og-title" property="og:title" content="Ethereum Wallet Analysis | cryptoucan.xyz">
+<meta id="og-description" property="og:description" content="Analyze any Ethereum wallet address instantly — free, no sign-up.">
+<meta id="og-url" property="og:url" content="https://cryptoucan.xyz/address/">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
@@ -428,6 +436,12 @@ function showLoading(address) {
 function render(data) {
   const addr = data.address;
   const displayName = data.ensName || shortAddr(addr);
+
+  // Update SEO with resolved ENS name if available
+  const seoName = data.ensName || (addr.slice(0, 6) + '...' + addr.slice(-4));
+  document.title = `${seoName} | Ethereum Wallet Analysis — cryptoucan.xyz`;
+  document.getElementById('og-title')?.setAttribute('content', `${seoName} | Ethereum Wallet Analysis — cryptoucan.xyz`);
+  document.getElementById('og-description')?.setAttribute('content', `ETH balance, tokens, and transaction history for ${data.ensName || addr} — analyzed by cryptoucan.xyz.`);
   const totalUSD = fmtUSD(data.ethUSD);
   const badgeClass = { active: 'badge-active', recent: 'badge-moderate', moderate: 'badge-moderate', dormant: 'badge-dormant', unknown: 'badge-dormant' }[data.activityStatus] || 'badge-dormant';
   const badgeLabel = { active: 'Active', recent: 'Recent', moderate: 'Moderate', dormant: 'Dormant', unknown: 'Unknown' }[data.activityStatus] || '—';
@@ -658,6 +672,16 @@ async function main() {
   }
 
   showLoading(raw);
+
+  // Dynamic SEO — update title/meta/canonical with actual address
+  const displayRaw = raw.endsWith('.eth') ? raw : raw.slice(0, 6) + '...' + raw.slice(-4);
+  document.title = `${displayRaw} | Ethereum Wallet Analysis — cryptoucan.xyz`;
+  const pageUrl = `https://cryptoucan.xyz/address/${raw}`;
+  document.getElementById('canonical-url')?.setAttribute('href', pageUrl);
+  document.getElementById('og-url')?.setAttribute('content', pageUrl);
+  document.getElementById('og-title')?.setAttribute('content', `${displayRaw} | Ethereum Wallet Analysis — cryptoucan.xyz`);
+  document.getElementById('og-description')?.setAttribute('content', `View ETH balance, token holdings, and transaction history for ${raw} on cryptoucan.xyz.`);
+
 
   try {
     const res  = await fetch(`${WORKER}/api/wallet/${encodeURIComponent(raw)}`);
