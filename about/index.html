@@ -213,25 +213,30 @@
 
   /* TECH STACK */
   .tech-row {
-    display: flex; align-items: center; gap: 14px;
+    display: flex; align-items: flex-start; gap: 14px;
     padding: 14px 0;
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
   .tech-row:last-child { border-bottom: none; }
   .tech-name {
     font-family: var(--mono); font-size: 12px; font-weight: 600;
-    color: var(--text); width: 140px; flex-shrink: 0;
+    color: var(--text); width: 140px; flex-shrink: 0; padding-top: 2px;
   }
   .tech-desc {
-    font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6;
+    font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6; flex: 1;
   }
   .tech-badge {
-    margin-left: auto;
     font-family: var(--mono); font-size: 10px;
     padding: 3px 10px; border-radius: 20px;
     background: rgba(52,211,153,0.1); color: var(--green);
     border: 1px solid rgba(52,211,153,0.2);
-    flex-shrink: 0;
+    flex-shrink: 0; white-space: nowrap;
+  }
+  @media (max-width: 680px) {
+    .tech-row { flex-direction: column; gap: 8px; padding: 16px 0; }
+    .tech-name { width: auto; font-size: 13px; }
+    .tech-badge { align-self: flex-start; }
+    .tech-desc { font-size: 13px; }
   }
 
   /* CTA */
