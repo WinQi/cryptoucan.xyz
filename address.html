@@ -304,15 +304,7 @@
     font-family: var(--mono); font-size: 11px; color: var(--muted2);
     margin-top: 10px;
   }
-  .refresh-btn {
-    font-family: var(--mono); font-size: 11px;
-    color: var(--grad1); cursor: pointer;
-    background: none; border: 1px solid rgba(79,138,255,0.3);
-    border-radius: 6px; padding: 3px 10px;
-    transition: all 0.2s;
-  }
-  .refresh-btn:hover { background: rgba(79,138,255,0.1); }
-  .refresh-btn:disabled { color: var(--muted2); border-color: var(--glass-border); cursor: not-allowed; }
+
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
@@ -462,7 +454,7 @@ function render(data) {
   const ageText = ageMs < 60000 ? 'just now'
     : ageMins < 60 ? ageMins + ' min' + (ageMins > 1 ? 's' : '') + ' ago'
     : ageHours + ' hr' + (ageHours > 1 ? 's' : '') + ' ago';
-  const canRefresh = ageMs > 5 * 60 * 1000; // 5 min cooldown
+
 
   // Update SEO with resolved ENS name if available
   const seoName = data.ensName || (addr.slice(0, 6) + '...' + addr.slice(-4));
@@ -557,8 +549,8 @@ function render(data) {
         </div>
         ${data.ensName ? '<div class="addr-full" style="margin-top:6px;word-break:break-all;"><a href="https://etherscan.io/address/' + addr + '" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;">' + addr + '</a></div>' : ''}
       </div>
-      <div class="last-updated">
-        <span>Last updated: ${ageText} ${canRefresh ? '<button class="refresh-btn" onclick="refreshWallet()">↻ Refresh</button>' : ''}</span>
+      <div class="last-updated" id="last-updated-bar">
+        <span>Last updated: ${ageText}${data._stale ? ' <span id="refreshing-indicator" style="color:var(--muted2);font-size:10px;margin-left:6px;">· Refreshing…</span>' : ''}</span>
       </div>
     </div>
 
@@ -690,6 +682,26 @@ function render(data) {
   // Store data for share/prompt functions
   window._walletData = data;
   if (!window._updatedAt) window._updatedAt = Date.now();
+
+  // If data is stale, poll for fresh data every 10s (max 6 attempts)
+  if (data._stale) {
+    let attempts = 0;
+    const pollInterval = setInterval(async () => {
+      attempts++;
+      if (attempts > 6) { clearInterval(pollInterval); return; }
+      try {
+        const addr = data.address;
+        const res = await fetch(`${WORKER}/api/wallet/${encodeURIComponent(addr)}`);
+        const fresh = await res.json();
+        if (!fresh.error && fresh._updatedAt > (window._updatedAt || 0)) {
+          clearInterval(pollInterval);
+          window._updatedAt = fresh._updatedAt;
+          window._walletData = fresh;
+          render(fresh);
+        }
+      } catch(e) {}
+    }, 10000);
+  }
   // Populate prompt textarea
   setTimeout(() => {
     const box = document.getElementById('promptBox');
@@ -737,7 +749,7 @@ async function main() {
 
 
   try {
-    const res  = await fetch(`${WORKER}/api/wallet/${encodeURIComponent(raw)}`);
+    const res = await fetch(`${WORKER}/api/wallet/${encodeURIComponent(raw)}`);
     const data = await res.json();
 
     if (data.error) {
@@ -776,32 +788,6 @@ Please analyze:
 4. Explain in simple, non-technical language.`;
 }
 
-function refreshWallet() {
-  const path = window.location.pathname;
-  const match = path.match(/\/address\/(.+)/);
-  if (!match) return;
-  const addr = match[1];
-  const WORKER = 'https://cryptoucan-api.winqi.workers.dev';
-
-  // Show spinner overlay so user knows something is happening
-  const overlay = document.createElement('div');
-  overlay.id = 'refresh-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,15,30,0.6);z-index:999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);';
-  overlay.innerHTML = '<div style="font-family:var(--mono);font-size:13px;color:var(--muted2);display:flex;align-items:center;gap:10px;"><span style="display:inline-block;width:16px;height:16px;border:2px solid var(--grad1);border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></span>Refreshing wallet data…</div>';
-  document.body.appendChild(overlay);
-
-  fetch(WORKER + '/api/wallet/' + addr + '?refresh=1')
-    .then(r => r.json())
-    .then(data => {
-      overlay.remove();
-      if (data.error) return;
-      window._walletData = data;
-      window._updatedAt = data._updatedAt || Date.now();
-      render(data);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    })
-    .catch(() => { overlay.remove(); });
-}
 
 function copyPrompt() {
   const box = document.getElementById('promptBox');
