@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CryptoToucan — Analyze Any Ethereum Wallet</title>
+<title>Ethereum Wallet Analysis | cryptoucan.xyz</title>
+<meta name="description" content="Analyze any Ethereum wallet address instantly. See ETH balance, token holdings, transaction history in plain English, wallet age and activity status — free, no sign-up.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" id="canonical-url" href="https://cryptoucan.xyz/address/">
+<meta property="og:site_name" content="cryptoucan.xyz">
+<meta property="og:type" content="website">
+<meta id="og-title" property="og:title" content="Ethereum Wallet Analysis | cryptoucan.xyz">
+<meta id="og-description" property="og:description" content="Analyze any Ethereum wallet address instantly — free, no sign-up.">
+<meta id="og-url" property="og:url" content="https://cryptoucan.xyz/address/">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
@@ -14,24 +22,22 @@
 <style>
   :root {
     --bg:        #0a0f1e;
-    --bg2:       #0d1428;
     --glass:     rgba(255,255,255,0.04);
     --glass-border: rgba(255,255,255,0.08);
     --glass-hover:  rgba(255,255,255,0.07);
     --grad1:     #4f8aff;
     --grad2:     #a855f7;
-    --grad3:     #7c3aed;
     --text:      #e8edf8;
     --muted:     #cbd5e8;
     --muted2:    #b0bfcf;
+    --green:     #34d399;
+    --red:       #f87171;
+    --yellow:    #fbbf24;
     --mono:      'JetBrains Mono', monospace;
     --sans:      'DM Sans', sans-serif;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
   body {
     background: var(--bg);
     color: var(--text);
@@ -40,567 +46,273 @@
     overflow-x: hidden;
   }
 
-  /* ── BACKGROUND ATMOSPHERE ── */
   .bg-orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.12;
-    pointer-events: none;
-    z-index: 0;
-    will-change: transform;
-    transform: translateZ(0);
+    position: fixed; border-radius: 50%;
+    filter: blur(120px); opacity: 0.10;
+    pointer-events: none; z-index: 0;
+    will-change: transform; transform: translateZ(0);
   }
-  .bg-orb-1 {
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, #4f8aff, transparent);
-    top: -200px; left: -100px;
-    animation: orbFloat 20s ease-in-out infinite;
-  }
-  .bg-orb-2 {
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, #a855f7, transparent);
-    top: 200px; right: -150px;
-    animation: orbFloat 25s ease-in-out infinite reverse;
-  }
-  .bg-orb-3 {
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, #3b82f6, transparent);
-    bottom: 100px; left: 30%;
-    animation: orbFloat 18s ease-in-out infinite 5s;
-  }
-  @keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0); }
-    33%       { transform: translate(30px, -20px); }
-    66%       { transform: translate(-20px, 30px); }
-  }
+  .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #4f8aff, transparent); top: -150px; left: -100px; }
+  .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent); top: 300px; right: -100px; }
 
-  /* Stars */
   .stars {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
     background-image:
       radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 40% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 55% 80%, rgba(255,255,255,0.2) 0%, transparent 100%),
-      radial-gradient(1px 1px at 70% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,0.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 92% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.2) 0%, transparent 100%),
-      radial-gradient(1px 1px at 60% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 78% 88%, rgba(255,255,255,0.4) 0%, transparent 100%);
+      radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 75%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
   }
 
-  /* ── LAYOUT ── */
   .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 660px;
-    margin: 0 auto;
+    position: relative; z-index: 1;
+    max-width: 660px; margin: 0 auto;
     padding: 0 20px 80px;
   }
 
-  /* ── NAVBAR ── */
+  /* NAV */
   nav {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 20px;
-    max-width: 660px;
-    margin: 0 auto;
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 20px; max-width: 660px; margin: 0 auto;
   }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-  }
-  .logo-icon {
-    font-size: 20px;
-    line-height: 1;
-  }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
   .logo-text {
-    font-family: var(--mono);
-    font-size: 14px;
-    font-weight: 700;
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
     background: linear-gradient(135deg, var(--grad1), var(--grad2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.02em;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .nav-tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 4px 10px;
-    border-radius: 20px;
+  .nav-back {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    text-decoration: none; display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
   }
+  .nav-back:hover { color: var(--grad1); }
 
-  /* ── HERO ── */
-  .hero {
-    padding: 56px 0 48px;
-    text-align: center;
+  /* SECTION FADE */
+  .section {
+    margin-bottom: 20px;
+    animation: fadeUp 0.5s ease both;
   }
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 5px 14px;
-    border-radius: 20px;
-    margin-bottom: 28px;
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--grad1);
-    box-shadow: 0 0 8px var(--grad1);
-    animation: pulse 2s ease infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .hero-brand {
-    font-family: var(--mono);
-    font-size: clamp(36px, 7.5vw, 56px);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    background: linear-gradient(135deg, var(--grad1) 0%, var(--grad2) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 12px;
-    animation: fadeUp 0.6s ease 0.05s both;
-  }
-  .hero h1 .white {
-    color: var(--text);
-  }
-  .hero h1 {
-    font-family: var(--mono);
-    font-size: clamp(26px, 5vw, 38px);
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-    animation: fadeUp 0.6s ease 0.1s both;
-  }
-  .hero h1 .grad {
-    background: linear-gradient(135deg, var(--grad1) 0%, var(--grad2) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .hero-tagline {
-    font-family: var(--mono);
-    font-size: clamp(22px, 4.5vw, 34px);
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-    animation: fadeUp 0.6s ease 0.1s both;
-  }
-  .hero-tagline .white { color: var(--text); }
-  .hero-sub {
-    font-size: 15px;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 420px;
-    margin: 0 auto 40px;
-    font-weight: 300;
-    animation: fadeUp 0.6s ease 0.2s both;
-  }
-
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  .section:nth-child(1) { animation-delay: 0.05s; }
+  .section:nth-child(2) { animation-delay: 0.10s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.20s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.30s; }
+  .section:nth-child(7) { animation-delay: 0.35s; }
 
-  /* ── SEARCH BOX ── */
-  .search-card {
+  /* CARD */
+  .card {
     background: var(--glass);
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
-    padding: 6px 6px 6px 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    animation: fadeUp 0.6s ease 0.3s both;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .search-card:focus-within {
-    border-color: rgba(79,138,255,0.4);
-    box-shadow: 0 0 0 3px rgba(79,138,255,0.08), 0 0 40px rgba(79,138,255,0.06);
-  }
-  .search-icon {
-    color: var(--muted2);
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-  .search-card input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text);
-    padding: 10px 0;
-  }
-  .search-card input::placeholder { color: var(--muted2); }
-  .scan-btn {
-    background: linear-gradient(135deg, var(--grad1), var(--grad2));
-    border: none;
-    border-radius: 14px;
-    padding: 12px 24px;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 700;
-    color: #fff;
-    cursor: pointer;
-    white-space: nowrap;
-    letter-spacing: 0.04em;
-    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(79,138,255,0.3);
-  }
-  .scan-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 28px rgba(79,138,255,0.4);
-  }
-  .scan-btn:active { transform: translateY(0); }
-
-  .search-hint {
-    text-align: center;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted2);
-    animation: fadeUp 0.6s ease 0.4s both;
-  }
-  .search-hint span {
-    color: var(--muted);
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 2px 8px;
-    border-radius: 6px;
-    margin: 0 3px;
+    padding: 24px;
   }
 
-  /* ── DIVIDER ── */
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
-    margin: 52px 0;
-  }
-
-  /* ── SECTION LABEL ── */
-  .section-label {
+  /* CARD TITLE */
+  .card-title {
     font-family: var(--mono);
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--muted2);
-    text-align: center;
-    margin-top: 60px;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-title::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--glass-border), transparent);
   }
 
-  /* ── HOW IT WORKS ── */
-  .steps {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .step {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 22px 24px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .step:hover {
-    background: var(--glass-hover);
-    border-color: rgba(255,255,255,0.12);
-  }
-  .step-num {
+  /* ADDRESS HEADER */
+  .addr-header { margin-bottom: 16px; }
+  .ens-name {
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 22px;
     font-weight: 700;
-    color: var(--grad1);
-    background: rgba(79,138,255,0.1);
-    border: 1px solid rgba(79,138,255,0.2);
-    width: 28px; height: 28px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .step-body h3 {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--text);
-  }
-  .step-body p {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  /* ── FEATURES ── */
-  .features {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .feature {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 18px 24px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    transition: background 0.2s;
-  }
-  .feature:hover { background: var(--glass-hover); }
-  .feature-icon {
-    font-size: 18px;
-    width: 36px;
-    text-align: center;
-    flex-shrink: 0;
-  }
-  .feature-text h4 {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
-  .feature-text p {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 300;
-  }
-
-  /* ── RECENT SCANS ── */
-  .recents {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-  }
-  @media (max-width: 600px) {
-    .recents { grid-template-columns: 1fr; }
-  }
-  .recent-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 16px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px);
-    border-radius: 14px;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
-    text-decoration: none;
-  }
-  .recent-item:hover {
-    background: var(--glass-hover);
-    border-color: rgba(79,138,255,0.2);
-  }
-  .recent-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--grad1), var(--grad2));
-    flex-shrink: 0;
-    box-shadow: 0 0 8px rgba(79,138,255,0.5);
-  }
-  .recent-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .recent-addr {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text);
-  }
-  .recent-addr .ens {
     background: linear-gradient(135deg, var(--grad1), var(--grad2));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    font-weight: 700;
-    font-size: 13px;
+    margin-bottom: 6px;
   }
-  .recent-hex {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted2);
-    margin-top: 2px;
-  }
-  .recent-role {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-  }
-  .recent-arrow {
-    color: var(--muted2);
-    font-size: 12px;
-    transition: transform 0.2s, color 0.2s;
-    align-self: flex-end;
-  }
-  .recent-item:hover .recent-arrow {
-    transform: translateX(3px);
-    color: var(--grad1);
+  .addr-full {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    word-break: break-all; line-height: 1.5;
   }
 
-  /* ── DEEP CONTENT ── */
-  .deep-content {
-    display: flex;
-    flex-direction: column;
+  /* SNAPSHOT GRID */
+  .snap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-  .deep-item {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 28px;
-  }
-  .deep-item h3 {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .deep-item p {
-    font-size: 14px;
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.85;
-    margin-bottom: 10px;
-  }
-  .deep-item p:last-child { margin-bottom: 0; }
-
-  /* ── FAQ ── */
-  .faq-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .faq-item {
-    background: var(--glass);
+  .snap-item {
+    background: rgba(255,255,255,0.025);
     border: 1px solid var(--glass-border);
     border-radius: 14px;
-    overflow: hidden;
-    transition: border-color 0.2s;
+    padding: 16px;
   }
-  .faq-item:has(.faq-a.open) {
-    border-color: rgba(79,138,255,0.2);
+  .snap-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted2); margin-bottom: 8px;
   }
-  .faq-q {
-    width: 100%; display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; padding: 16px 20px;
-    background: none; border: none; cursor: pointer;
-    font-family: var(--mono); font-size: 12px; font-weight: 600;
-    color: var(--text); text-align: left;
-    transition: color 0.2s;
+  .snap-value {
+    font-family: var(--mono); font-size: 18px; font-weight: 700;
+    color: var(--text); margin-bottom: 4px;
   }
-  .faq-q:hover { color: var(--grad1); }
-  .faq-arrow {
-    font-size: 18px; font-weight: 300; color: var(--muted2);
-    flex-shrink: 0; transition: transform 0.25s, color 0.2s;
-    line-height: 1;
+  .snap-value.grad {
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .faq-q:hover .faq-arrow { color: var(--grad1); }
-  .faq-a {
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.35s ease, padding 0.25s ease;
-    padding: 0 20px;
-  }
-  .faq-a.open {
-    max-height: 300px;
-    padding: 0 20px 16px;
-  }
-  .faq-a p {
-    font-size: 13px; color: var(--muted); font-weight: 300;
-    line-height: 1.8;
-    border-top: 1px solid var(--glass-border);
-    padding-top: 14px;
-  }
-  .faq-a strong { color: var(--text); font-weight: 500; }
+  .snap-sub { font-size: 11px; color: var(--muted); font-weight: 300; }
 
-  /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    padding: 40px 0 0;
-    border-top: 1px solid var(--glass-border);
-    margin-top: 60px;
+  /* BADGE */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 20px;
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.06em;
   }
-  footer p {
-    font-family: var(--mono);
-    font-size: 11px;
+  .badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+  .badge-dormant { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+  .badge-dormant::before { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .badge-active  { background: rgba(52,211,153,0.1); color: var(--green); border: 1px solid rgba(52,211,153,0.2); }
+  .badge-active::before  { background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse 2s infinite; }
+  .badge-moderate { background: rgba(251,191,36,0.1); color: var(--yellow); border: 1px solid rgba(251,191,36,0.2); }
+  .badge-moderate::before { background: var(--yellow); }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  /* ASSET BARS */
+  .asset-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .asset-tag {
+    display: flex; flex-direction: column; gap: 3px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px; padding: 10px 14px;
+    min-width: 80px;
+  }
+  .asset-tag-sym {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    color: var(--text);
+  }
+  .asset-tag-val {
+    font-family: var(--mono); font-size: 11px;
     color: var(--muted2);
-    line-height: 1.8;
   }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--grad1); }
+  .asset-tag-eth { border-color: rgba(79,138,255,0.25); background: rgba(79,138,255,0.06); }
+  .asset-tag-eth .asset-tag-sym { color: #7cb9ff; }
 
-  /* ── AD SLOT ── */
+  /* TX LIST */
+  .tx-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .tx-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .tx-icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .tx-icon.in  { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.15); }
+  .tx-icon.out { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.15); }
+  .tx-icon.contract { background: rgba(79,138,255,0.1); border: 1px solid rgba(79,138,255,0.15); }
+  .tx-body { flex: 1; }
+  .tx-desc { font-size: 13px; color: var(--text); line-height: 1.5; margin-bottom: 3px; font-weight: 400; }
+  .tx-meta { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
+  .tx-amount { font-family: var(--mono); font-size: 12px; text-align: right; flex-shrink: 0; }
+  .tx-amount.in  { color: var(--green); }
+  .tx-amount.out { color: var(--red); }
+
+  /* BUTTONS */
+  .btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    border: none; border-radius: 14px;
+    padding: 15px;
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    color: #fff; cursor: pointer;
+    letter-spacing: 0.04em;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(79,138,255,0.25);
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 28px rgba(79,138,255,0.35); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary.copied { background: linear-gradient(135deg, #34d399, #059669); box-shadow: 0 4px 20px rgba(52,211,153,0.25); }
+
+  .btn-secondary {
+    flex: 1;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px; padding: 13px;
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    color: var(--text); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    transition: background 0.2s, border-color 0.2s;
+    backdrop-filter: blur(12px);
+  }
+  .btn-secondary:hover { background: var(--glass-hover); border-color: rgba(79,138,255,0.3); }
+
+  .share-row { display: flex; gap: 10px; }
+
+  /* SEARCH AGAIN */
+  .search-again {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 6px 6px 6px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .search-again input {
+    flex: 1; background: transparent; border: none; outline: none;
+    font-family: var(--mono); font-size: 12px; color: var(--text);
+    padding: 8px 0;
+  }
+  .search-again input::placeholder { color: var(--muted2); }
+
+  /* AD SLOT */
   .ad-slot {
     background: var(--glass);
     border: 1px dashed var(--muted2);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 12px; padding: 16px;
     text-align: center;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted2);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin: 0;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--muted2); letter-spacing: 0.1em; text-transform: uppercase;
   }
 
-  /* ── STAGGER ANIMATION ── */
-  .fade-section {
-    animation: fadeUp 0.7s ease both;
+  /* OTHERS TOKEN */
+  .others-row {
+    margin-top: 12px;
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    line-height: 1.7;
   }
-  .fade-section:nth-child(1) { animation-delay: 0.1s; }
-  .fade-section:nth-child(2) { animation-delay: 0.2s; }
-  .fade-section:nth-child(3) { animation-delay: 0.3s; }
+  .last-updated {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    margin-top: 10px;
+  }
+  .refresh-btn {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--grad1); cursor: pointer;
+    background: none; border: 1px solid rgba(79,138,255,0.3);
+    border-radius: 6px; padding: 3px 10px;
+    transition: all 0.2s;
+  }
+  .refresh-btn:hover { background: rgba(79,138,255,0.1); }
+  .refresh-btn:disabled { color: var(--muted2); border-color: var(--glass-border); cursor: not-allowed; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -608,408 +320,505 @@
 <div class="stars"></div>
 <div class="bg-orb bg-orb-1"></div>
 <div class="bg-orb bg-orb-2"></div>
-<div class="bg-orb bg-orb-3"></div>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <nav>
   <a href="/" class="logo" style="display:flex;align-items:center;gap:8px;">
     <img src="/images/favicon.png" style="width:24px;height:24px;object-fit:contain;" alt="cryptoucan logo">
     <span class="logo-text">cryptoucan.xyz</span>
   </a>
-  <span class="nav-tag">Ethereum Wallet Analyzer</span>
+  <a href="/" class="nav-back">← New scan</a>
 </nav>
 
-<!-- MAIN CONTENT -->
-<div class="wrap">
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-eyebrow">Live on Ethereum Mainnet</div>
-    <img src="/images/favicon.png" style="display:block;margin:24px auto 0;width:100px;height:100px;object-fit:contain;" alt="cryptoucan logo">
-    <div class="hero-brand">cryptoucan.xyz</div>
-    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Ethereum Wallet Analyzer — Decode Any Ethereum Address Instantly</h1>
-    <p class="hero-tagline">Blockchain Data<br><span class="white">Human Language</span></p>
-    <p class="hero-sub">Any address. Instant insights.</p>
-
-    <!-- SEARCH -->
-    <div class="search-card">
-      <span class="search-icon">⬡</span>
-      <input type="text" id="addressInput" placeholder="0x... or vitalik.eth" autocomplete="off" spellcheck="false" />
-      <button class="scan-btn" onclick="handleScan()">Scan →</button>
-    </div>
-    <div class="search-hint">
-      Try <span>vitalik.eth</span> or paste any <span>0x address</span>
-    </div>
-  </div>
-
-  <!-- AD SLOT -->
-
-  <div class="divider"></div>
-
-  <!-- FEATURED WALLETS -->
-  <div class="fade-section">
-    <div class="section-label">Notable wallets to explore</div>
-    <div class="recents" id="notable-wallets"></div>
-  </div>
-  <script>
-  (function() {
-    const FIXED = [
-      { name: 'vitalik.eth', addr: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', short: '0xd8dA...6045', role: 'Ethereum co-founder' },
-      { name: 'Binance Cold', addr: '0x28C6c06298d514Db089934071355E5743bf21d60', short: '0x28C6...1d60', role: 'Binance cold wallet' },
-      { name: 'ETH2 Deposit', addr: '0x00000000219ab540356cBB839Cbe05303d7705Fa', short: '0x0000...05Fa', role: 'ETH staking contract' },
-    ];
-
-    const POOL = [
-      { name: 'Coinbase', addr: '0x71660c4005BA85c37ccec55d0C4493E66Fe775d3', short: '0x7166...75d3', role: 'Coinbase hot wallet' },
-      { name: 'Kraken 3', addr: '0xE853c56864A2ebe4576a807D26Fdc4A0ada51919', short: '0xE853...1919', role: 'Kraken exchange' },
-      { name: 'Kraken 4', addr: '0x267be1C1D684F78cb4F6a176C4911b741E4Ffdc0', short: '0x267b...fdc0', role: 'Kraken exchange' },
-      { name: 'Bitfinex 2', addr: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', short: '0x742d...f44e', role: 'Bitfinex exchange' },
-      { name: 'Gemini 1', addr: '0xd24400ae8BFEBb18cA49Be86258a3C749cf46853', short: '0xd244...6853', role: 'Gemini exchange' },
-      { name: 'OKX 1', addr: '0x6cC5F688a315f3dC28A7781717a9A798a59fDA7b', short: '0x6cC5...DA7b', role: 'OKX exchange' },
-      { name: 'Gate.io', addr: '0x1C4b70a3968436B9A0a9cF5205c787eb81bb558c', short: '0x1C4b...558c', role: 'Gate.io exchange' },
-      { name: 'Binance 2', addr: '0xd551234ae421e3bcba99a0Da6d736074f22192ff', short: '0xd551...92ff', role: 'Binance exchange' },
-      { name: 'Binance 5', addr: '0xfe9e8709d3215310075d67E3ed32A380CCf451C8', short: '0xfe9e...51C8', role: 'Binance exchange' },
-      { name: 'WETH Contract', addr: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', short: '0xC02a...6Cc2', role: 'Wrapped ETH contract' },
-      { name: 'Uniswap V3', addr: '0xE592427A0AEce92De3Edee1F18E0157C05861564', short: '0xE592...1564', role: 'Uniswap V3 router' },
-      { name: 'Lido stETH', addr: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84', short: '0xae7a...Fe84', role: 'Lido staking contract' },
-      { name: 'Aave V3', addr: '0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2', short: '0x8787...A4E2', role: 'Aave V3 pool' },
-      { name: 'ETH Foundation', addr: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', short: '0xde0B...7BAe', role: 'Ethereum Foundation' },
-      { name: 'Grayscale ETHE', addr: '0xc55126051B22eBb829D00368f4B12Bde432de5Da', short: '0xc551...e5Da', role: 'Grayscale ETH fund' },
-      { name: 'Arbitrum Bridge', addr: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a', short: '0x8315...ed3a', role: 'Arbitrum L2 bridge' },
-      { name: 'Polygon Bridge', addr: '0x401F6c983eA34274ec46f84D70b31C151321188b', short: '0x401F...88b', role: 'Polygon L2 bridge' },
-      { name: 'Robinhood', addr: '0x40B38765696e3d5d8d9d834D8AaD4bB6e418E489', short: '0x40B3...E489', role: 'Robinhood exchange' },
-      { name: 'Buterin Fund', addr: '0x47ac0Fb4F2D84898e4D9E7b4DaB3C24507a6D503', short: '0x47ac...D503', role: 'Vitalik donation wallet' },
-      { name: 'BlackRock ETHA', addr: '0xf3b0073E3a7F747C7A38B36B805247B222C302A9', short: '0xf3b0...02A9', role: 'BlackRock ETH ETF' },
-    ];
-
-    // Pick 3 random from pool (no duplicates)
-    const shuffled = POOL.slice().sort(() => Math.random() - 0.5);
-    const random3 = shuffled.slice(0, 3);
-    const wallets = [...FIXED, ...random3];
-
-    const container = document.getElementById('notable-wallets');
-    container.innerHTML = wallets.map(w => `
-      <a href="/address/${w.addr.toLowerCase()}" class="recent-item">
-        <div class="recent-top">
-          <div class="recent-addr"><span class="ens">${w.name}</span></div>
-          <div class="recent-arrow">→</div>
-        </div>
-        <div class="recent-hex">${w.short}</div>
-        <div class="recent-role">${w.role}</div>
-      </a>
-    `).join('');
-  })();
-  </script>
-
-  <div class="divider"></div>
-
-  <!-- HOW IT WORKS -->
-  <div class="fade-section">
-    <div class="section-label">How it works</div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>Enter any address</h3>
-          <p>Paste a full 0x address or an ENS name like vitalik.eth — both work.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>We read the chain</h3>
-          <p>We pull live data from Ethereum — balances, transactions, token holdings.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-body">
-          <h3>You get a clear picture</h3>
-          <p>No raw hex. No confusing numbers. Just what the wallet has done and holds.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- FEATURES -->
-  <div class="fade-section">
-    <div class="section-label">What you'll see</div>
-    <div class="features">
-      <div class="feature">
-        <div class="feature-icon">💰</div>
-        <div class="feature-text">
-          <h4>Wallet Snapshot</h4>
-          <p>Total value, ETH balance, wallet age, activity status</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📊</div>
-        <div class="feature-text">
-          <h4>Asset Breakdown</h4>
-          <p>Token holdings visualised — what matters, filter out the noise</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🔄</div>
-        <div class="feature-text">
-          <h4>Transactions in Plain English</h4>
-          <p>"Swapped on Uniswap" instead of raw contract calls</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📋</div>
-        <div class="feature-text">
-          <h4>Copy AI Prompt</h4>
-          <p>One click to get a ready-made prompt for ChatGPT or Claude</p>
-        </div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🔗</div>
-        <div class="feature-text">
-          <h4>Shareable URL</h4>
-          <p>Every wallet gets its own page — share or bookmark anytime</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- FAQ -->
-  <div class="fade-section">
-    <div class="section-label">Frequently Asked Questions</div>
-    <div class="faq-list" id="faqList">
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>What is cryptoucan.xyz?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>cryptoucan.xyz is a free Ethereum wallet analyzer. Paste any Ethereum address or ENS name and instantly see the wallet's ETH balance, token holdings, transaction history in plain English, wallet age, and activity status — no sign-up required.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Is cryptoucan.xyz free to use?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>Yes, completely free. There are no subscription plans, no hidden fees, and no premium tiers. cryptoucan.xyz is supported by advertising, which allows us to keep the tool free for everyone.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Do I need to create an account or connect my wallet?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>No. You never need to create an account, log in, or connect a wallet. Just type or paste any Ethereum address into the search box and hit Scan. That's it.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Is it safe to enter my wallet address here?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>Yes. An Ethereum wallet address is public information — it's visible to everyone on the blockchain. Entering your address on cryptoucan.xyz is no different from sharing it with anyone else. We never ask for your private key or seed phrase. We have no ability to access or move your funds.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Where does the data come from?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>All on-chain data — balances, transactions, and token transfers — is sourced from the Ethereum blockchain via the Etherscan API, one of the most trusted Ethereum data providers. ETH price data is provided by CoinGecko.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>How accurate is the data?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>Data is fetched live from the blockchain each time you scan a wallet, so it reflects the current state as accurately as our data providers allow. There may occasionally be minor delays due to API latency. For the most authoritative data, you can always cross-check directly on Etherscan.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Why is my token balance not showing correctly?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>Token USD values are currently based on ETH price only. Full token price integration via CoinGecko is on our roadmap. If a token balance appears missing or incorrect, it may also be because the token is very new or has very low liquidity, which can affect data availability.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Why are some of my tokens missing?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>cryptoucan.xyz automatically filters out spam tokens — these include unsolicited airdrops, phishing tokens, and tokens with suspicious names containing URLs or reward-related keywords. This keeps the display clean and focused on tokens you actually hold. If a legitimate token is missing, it may have been caught by the spam filter.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>What is the AI Analysis Prompt?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>Every wallet page includes a pre-filled prompt that summarises the wallet's key data. You can copy it and paste it into ChatGPT or Claude to get a deeper, more personalised analysis of the wallet's activity, portfolio, and behaviour patterns.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Can I scan any Ethereum wallet, including someone else's?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>Yes. All Ethereum wallet data is publicly visible on the blockchain — anyone can look up any address at any time. cryptoucan.xyz simply makes that public data easier to read. We do not restrict which addresses can be scanned.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Does cryptoucan.xyz support other blockchains like BNB or Solana?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>Currently, cryptoucan.xyz supports Ethereum (ETH) only. Support for other EVM-compatible chains such as BNB Smart Chain, Base, and Polygon is on our roadmap. Solana and other non-EVM chains may be considered in a future version.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>What does the activity status mean?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>The activity status gives you a quick sense of how recently the wallet has been used: <strong>Active</strong> means a transaction within the last 30 days, <strong>Recent</strong> means within 90 days, <strong>Moderate</strong> means within a year, and <strong>Dormant</strong> means no activity for over a year.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Does cryptoucan.xyz store my data?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>No. We do not store any wallet addresses, search history, or personal information. Every scan is a fresh real-time query — nothing is saved on our end. See our <a href="/privacy" style="color:var(--grad1);">Privacy Policy</a> for full details.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          <span>Can cryptoucan.xyz access or move my funds?</span>
-          <span class="faq-arrow">+</span>
-        </button>
-        <div class="faq-a">
-          <p>Absolutely not. cryptoucan.xyz is a read-only tool. We do not connect to wallets, we do not have access to any private keys, and we have no ability to execute transactions or move funds of any kind. Scanning a wallet on cryptoucan.xyz has zero effect on that wallet.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- DEEP CONTENT -->
-  <div class="fade-section">
-    <div class="section-label">Who Is This For?</div>
-    <div class="deep-content">
-
-      <div class="deep-item">
-        <h3>🔍 Crypto Beginners Who Want to Understand Their Own Wallet</h3>
-        <p>You bought some ETH, made a few transactions, and now your wallet history looks like a wall of hexadecimal gibberish. cryptoucan.xyz translates all of that into plain English. See exactly what you've done on-chain — what you swapped, what you received, how long you've held — without needing to understand how the blockchain actually works under the hood.</p>
-        <p>It's the fastest way to get a clear picture of your own wallet without touching a block explorer.</p>
-      </div>
-
-      <div class="deep-item">
-        <h3>🧐 Researchers and Analysts Investigating Wallets</h3>
-        <p>Whether you're tracing funds, studying on-chain behaviour, or doing due diligence on a counterparty, cryptoucan.xyz gives you an instant readable summary of any public Ethereum address. See wallet age, activity patterns, notable transactions, and token holdings at a glance — without parsing raw data manually.</p>
-        <p>Use the built-in AI prompt to feed the wallet summary directly into ChatGPT or Claude for a deeper structured analysis in seconds.</p>
-      </div>
-
-      <div class="deep-item">
-        <h3>💼 Investors Checking a Wallet Before Sending Funds</h3>
-        <p>Before you send ETH or tokens to an address — whether it's a project wallet, a new exchange, or someone you're dealing with — it pays to know what that wallet has done. Is it newly created? Has it ever interacted with major protocols? How active is it? cryptoucan.xyz answers these questions instantly, giving you a basic sanity check before any transfer.</p>
-        <p>All Ethereum wallet data is public. You're entitled to look — and knowing is always better than guessing.</p>
-      </div>
-
-      <div class="deep-item">
-        <h3>🏛️ DeFi Users Reviewing Their Activity</h3>
-        <p>If you use DeFi protocols — Uniswap, Aave, Lido, Curve, and others — your wallet history can get complex fast. cryptoucan.xyz recognises interactions with major protocols and describes them in plain English: "Swapped tokens on Uniswap", "Staked ETH on Lido", "Deposited into Aave". It's a fast way to review what your wallet has been doing without deep-diving into Etherscan every time.</p>
-      </div>
-
-      <div class="deep-item">
-        <h3>🎓 Students and Developers Learning About Ethereum</h3>
-        <p>cryptoucan.xyz is a great learning tool for anyone studying how Ethereum works in practice. Look up famous wallets — Vitalik's address, major exchange hot wallets, early ETH holders — and see their transaction history in human-readable form. Understanding real on-chain behaviour is one of the best ways to learn how the Ethereum ecosystem actually operates.</p>
-        <p>Pair the wallet summary with the AI prompt to generate detailed explanations of what each transaction type means and why it matters.</p>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>
-      <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
-      <a href="#" style="font-family:var(--mono); background: linear-gradient(135deg, var(--grad1), var(--grad2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-decoration:none; font-weight:700;">cryptoucan.xyz</a>
-    </p>
-    <p style="margin-top:12px;">
-      <a href="/about">About</a> &nbsp;·&nbsp;
-      <a href="/contact">Contact</a> &nbsp;·&nbsp;
-      <a href="/privacy">Privacy</a> &nbsp;·&nbsp;
-      <a href="/terms">Terms</a>
-    </p>
-    <p style="margin-top:12px;margin-bottom:12px;">
-      Every wallet has a story.
-    </p>
-    <div style="margin-top:16px; display:flex; align-items:center; justify-content:center; gap:8px;">
-      <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;"><img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;"><span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span></a>
-    </div>
+<div class="wrap" id="main-content">
   </footer>
 
 </div>
-
 <script>
-function handleScan() {
-  const val = document.getElementById('addressInput').value.trim();
-  if (!val) return;
-  window.location.href = '/address/' + val.trim().toLowerCase();
-}
-document.getElementById('addressInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') handleScan();
-});
+const WORKER = 'https://cryptoucan-api.winqi.workers.dev';
 
-function toggleFaq(btn) {
-  const answer = btn.nextElementSibling;
-  const arrow  = btn.querySelector('.faq-arrow');
-  const isOpen = answer.classList.contains('open');
-  // Close all
-  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
-  document.querySelectorAll('.faq-arrow').forEach(a => { a.textContent = '+'; a.style.transform = ''; });
-  // Open clicked (if it wasn't already open)
-  if (!isOpen) {
-    answer.classList.add('open');
-    arrow.textContent = '−';
-    arrow.style.transform = 'rotate(0deg)';
+// ── Helpers ──────────────────────────────────────────────────
+function shortAddr(addr) {
+  return addr.slice(0, 6) + '…' + addr.slice(-4);
+}
+function fmtETH(val) {
+  if (val === 0) return '0 ETH';
+  if (val < 0.0001) return '< 0.0001 ETH';
+  const n = val >= 1000
+    ? val.toLocaleString('en-US', { maximumFractionDigits: 2 })
+    : val.toFixed(4);
+  return n + ' ETH';
+}
+function fmtUSD(val) {
+  if (!val || val === 0) return '$0';
+  const fmt = n => n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  if (val >= 1000000) return '$' + fmt(val / 1000000) + 'M';
+  if (val >= 1000) return '$' + fmt(val / 1000) + 'K';
+  return '$' + fmt(val);
+}
+function timeAgo(isoDate) {
+  if (!isoDate) return '—';
+  const diff = (Date.now() - new Date(isoDate)) / 1000;
+  const d = Math.floor(diff / 86400);
+  const y = Math.floor(d / 365);
+  const m = Math.floor((d % 365) / 30);
+  if (y > 0) return y + ' yr' + (y > 1 ? 's' : '') + (m > 0 ? ' ' + m + ' mo' : '') + ' ago';
+  if (d > 30) return m + ' mo ago';
+  if (d > 0) return d + ' day' + (d > 1 ? 's' : '') + ' ago';
+  return 'Today';
+}
+function sinceDate(isoDate) {
+  if (!isoDate) return '—';
+  const d = new Date(isoDate);
+  return 'Since ' + d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+function fmtAge(days) {
+  if (!days) return '—';
+  const y = Math.floor(days / 365);
+  const m = Math.floor((days % 365) / 30);
+  if (y > 0) return y + ' yr' + (y > 1 ? 's' : '') + (m > 0 ? ' ' + m + ' mo' : '');
+  if (m > 0) return m + ' mo';
+  return days + ' days';
+}
+function txIcon(type) {
+  if (type === 'in') return '⬇️';
+  if (type === 'out') return '⬆️';
+  if (type === 'failed') return '✕';
+  return '⚡';
+}
+function txIconClass(type) {
+  if (type === 'in') return 'in';
+  if (type === 'out') return 'out';
+  return 'contract';
+}
+function txAmountStr(tx) {
+  if (tx.ethValue && tx.ethValue > 0.00001) {
+    const sign = tx.type === 'in' ? '+' : tx.type === 'out' ? '−' : '';
+    return sign + tx.ethValue.toFixed(4) + ' ETH';
+  }
+  return '';
+}
+
+// ── Render error state ────────────────────────────────────────
+function showError(msg) {
+  const el = document.getElementById('main-content');
+  el.innerHTML = '';
+  const section = document.createElement('div');
+  section.className = 'section';
+  section.style.marginTop = '40px';
+  section.innerHTML = '<div class="card" style="text-align:center;padding:48px 24px;">' +
+    '<div style="font-size:40px;margin-bottom:16px;">⚠️</div>' +
+    '<div style="font-family:var(--mono);font-size:16px;color:var(--text);margin-bottom:10px;">' + msg + '</div>' +
+    '<div style="font-size:13px;color:var(--muted);margin-bottom:24px;">Double-check the address and try again.</div>' +
+    '<div class="search-again" style="max-width:420px;margin:0 auto;">' +
+    '<span style="color:var(--muted2);font-size:13px;">⬡</span>' +
+    '<input type="text" id="errorInput" placeholder="0x... or ENS name" />' +
+    '<button class="btn-secondary" style="flex:none;padding:10px 18px;font-size:12px;" id="errorScanBtn">Scan →</button>' +
+    '</div></div>';
+  el.appendChild(section);
+  function doScan() {
+    const v = document.getElementById('errorInput').value.trim();
+    if (v) window.location.href = '/address/' + v.toLowerCase();
+  }
+  document.getElementById('errorScanBtn').addEventListener('click', doScan);
+  document.getElementById('errorInput').addEventListener('keydown', e => { if (e.key === 'Enter') doScan(); });
+}
+
+function showLoading(address) {
+  document.title = shortAddr(address) + ' | CryptoToucan';
+  document.getElementById('main-content').innerHTML = `
+    <div class="section">
+      <div class="addr-header">
+        <div class="ens-name" style="font-size:14px; color:var(--muted);">Loading…</div>
+        <div class="addr-full">${address}</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="card">
+        <div class="card-title">📊 Wallet Snapshot</div>
+        <div class="snap-grid">
+          ${['Total Value','Wallet Age','Last Active','Transactions'].map(l => `
+          <div class="snap-item">
+            <div class="snap-label">${l}</div>
+            <div class="snap-value" style="background:var(--glass-border);border-radius:6px;height:28px;width:80%;animation:shimmer 1.4s infinite;"></div>
+            <div class="snap-sub" style="background:var(--glass-border);border-radius:4px;height:14px;width:60%;margin-top:8px;animation:shimmer 1.4s infinite;"></div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+function render(data) {
+  const addr = data.address;
+  const displayName = data.ensName || shortAddr(addr);
+
+  // Last updated bar — use D1 timestamp if available
+  const updatedAt = data._updatedAt || window._updatedAt || Date.now();
+  window._updatedAt = updatedAt;
+  const ageMs = Date.now() - updatedAt;
+  const ageMins = Math.floor(ageMs / 60000);
+  const ageHours = Math.floor(ageMs / 3600000);
+  const ageText = ageMs < 60000 ? 'just now'
+    : ageMins < 60 ? ageMins + ' min' + (ageMins > 1 ? 's' : '') + ' ago'
+    : ageHours + ' hr' + (ageHours > 1 ? 's' : '') + ' ago';
+  const canRefresh = ageMs > 5 * 60 * 1000; // 5 min cooldown
+
+  // Update SEO with resolved ENS name if available
+  const seoName = data.ensName || (addr.slice(0, 6) + '...' + addr.slice(-4));
+  document.title = `${seoName} | Ethereum Wallet Analysis — cryptoucan.xyz`;
+  document.getElementById('og-title')?.setAttribute('content', `${seoName} | Ethereum Wallet Analysis — cryptoucan.xyz`);
+  document.getElementById('og-description')?.setAttribute('content', `ETH balance, tokens, and transaction history for ${data.ensName || addr} — analyzed by cryptoucan.xyz.`);
+  const totalUSD = fmtUSD(data.ethUSD);
+  const badgeClass = { active: 'badge-active', recent: 'badge-moderate', moderate: 'badge-moderate', dormant: 'badge-dormant', unknown: 'badge-dormant' }[data.activityStatus] || 'badge-dormant';
+  const badgeLabel = { active: 'Active', recent: 'Recent', moderate: 'Moderate', dormant: 'Dormant', unknown: 'Unknown' }[data.activityStatus] || '—';
+
+  // Title
+  document.title = displayName + ' Wallet Analysis | CryptoToucan';
+
+  // Transactions HTML — filter out zero-value non-meaningful txs
+  const meaningfulTxs = data.transactions.filter(tx =>
+    tx.isError
+    || (tx.type === 'in' && tx.ethValue > 0.001)
+    || (tx.type === 'out' && tx.ethValue > 0.0001)
+    || (tx.type === 'contract' && !tx.description.startsWith('Received') && !tx.description.startsWith('Sent 0.0000'))
+    || ['Swapped', 'Claimed', 'Staked', 'Minted', 'Deposited', 'Withdrew', 'Removed', 'Added', 'Approved', 'Transferred'].some(k => tx.description.startsWith(k))
+  );
+  // If all filtered out, show a "no notable activity" message instead of raw 0-value txs
+  const txList = Array.isArray(meaningfulTxs) ? meaningfulTxs : [];
+  const txHTML = txList.length === 0
+    ? '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px 0;">No notable transactions in recent history</div>'
+    : txList.map(tx => `
+      <div class="tx-item">
+        <div class="tx-icon ${txIconClass(tx.type)}">${txIcon(tx.type)}</div>
+        <div class="tx-body">
+          <div class="tx-desc">${tx.description}</div>
+          <div class="tx-meta">${timeAgo(new Date(tx.timestamp * 1000).toISOString())} · Gas: ${tx.gasETH.toFixed(4)} ETH
+            · <a href="https://etherscan.io/tx/${tx.hash}" target="_blank" rel="noopener" style="color:var(--muted2);text-decoration:none;font-size:10px;">↗ Etherscan</a>
+          </div>
+        </div>
+        <div class="tx-amount ${tx.type === 'in' ? 'in' : tx.type === 'out' ? 'out' : ''}">${txAmountStr(tx)}</div>
+      </div>`).join('');
+
+  // Asset bars — ETH + top tokens with real balance
+  const ethUSD = data.ethUSD || 0;
+  const hasETH = data.ethBalance > 0;
+  const topTokens = (data.topTokens || []).slice(0, 5);
+
+  function fmtTokenBalance(n) {
+    if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
+    if (n >= 1)   return n.toFixed(2);
+    return n.toFixed(4);
+  }
+
+
+
+
+
+  let assetRows = '';
+
+  if (hasETH) {
+    assetRows += `<div class="asset-tag asset-tag-eth">
+      <div class="asset-tag-sym">ETH</div>
+      <div class="asset-tag-val">${fmtETH(data.ethBalance)}</div>
+    </div>`;
+  }
+
+  topTokens.forEach((tok, i) => {
+    assetRows += `<div class="asset-tag">
+      <div class="asset-tag-sym">${tok.symbol}</div>
+      <div class="asset-tag-val">${fmtTokenBalance(tok.balance)}</div>
+    </div>`;
+  });
+
+  const assetHTML = assetRows
+    ? `<div class="asset-tags">${assetRows}</div>`
+    : `<div style="color:var(--muted);font-size:13px;">No assets detected.</div>`;
+
+  document.getElementById('main-content').innerHTML = `
+    <!-- ADDRESS HEADER -->
+    <div class="section">
+      <div class="addr-header">
+        <div class="ens-name">
+          <a href="https://etherscan.io/address/${addr}" target="_blank" rel="noopener" style="background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;word-break:break-all;">${data.ensName || addr} ↗</a>
+        </div>
+        ${data.ensName ? '<div class="addr-full" style="margin-top:6px;word-break:break-all;"><a href="https://etherscan.io/address/' + addr + '" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;">' + addr + '</a></div>' : ''}
+      </div>
+      <div class="last-updated">
+        <span>Last updated: ${ageText} ${canRefresh ? '<button class="refresh-btn" onclick="refreshWallet()">↻ Refresh</button>' : ''}</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <div class="card-title">📊 Wallet Snapshot</div>
+        <div class="snap-grid">
+          <div class="snap-item">
+            <div class="snap-label">Total Value</div>
+            <div class="snap-value grad">${totalUSD}</div>
+            <div class="snap-sub">${fmtETH(data.ethBalance)} · $${data.ethPrice.toFixed(0)}/ETH</div>
+          </div>
+          <div class="snap-item">
+            <div class="snap-label">Wallet Age</div>
+            <div class="snap-value">${fmtAge(data.walletAgeDays)}</div>
+            <div class="snap-sub">${sinceDate(data.firstTxDate)}</div>
+          </div>
+          <div class="snap-item">
+            <div class="snap-label">Last Active</div>
+            <div class="snap-value">${timeAgo(data.lastTxDate)}</div>
+            <div class="snap-sub"><span class="badge ${badgeClass}">${badgeLabel}</span></div>
+          </div>
+          <div class="snap-item">
+            <div class="snap-label">Transactions</div>
+            <div class="snap-value">${data.sentTxCount ?? data.totalTxCount}</div>
+            <div class="snap-sub">${data.totalTxCount} total (incl. received)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSET BREAKDOWN -->
+    <div class="section">
+      <div class="card">
+        <div class="card-title" style="justify-content:space-between;align-items:center;">
+          <span>📈 Asset Breakdown</span>
+          ${data.tokenCount > 0 ? `<span style="font-family:var(--mono);font-size:11px;color:var(--muted2);font-weight:400;letter-spacing:0.03em;">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</span>` : ''}
+        </div>
+        ${assetHTML}
+        <div style="margin-top:20px;text-align:center;">
+          <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENT TRANSACTIONS -->
+    <div class="section">
+      <div class="card">
+        <div class="card-title">🔄 Notable Transactions</div>
+        ${txHTML}
+        <div style="margin-top:16px;padding-top:14px;text-align:center;">
+          <a href="https://etherscan.io/txs?a=${addr}" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all transactions on Etherscan ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI PROMPT -->
+    <div class="section">
+      <div class="card">
+        <div class="card-title">📋 AI Analysis Prompt</div>
+        <div id="promptBox" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:12px;padding:14px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7;outline:none;margin-bottom:12px;white-space:pre-wrap;word-break:break-word;user-select:text;" contenteditable="true" spellcheck="false"></div>
+        <p style="font-size:12px;color:var(--muted2);line-height:1.6;font-weight:300;font-family:var(--mono);margin-bottom:10px;">
+          Drop this into ChatGPT, Claude, or Gemini.
+        </p>
+        <button class="btn-primary" id="copyBtn" onclick="copyPrompt()" style="width:100%;">Copy &amp; Ask AI</button>
+      </div>
+    </div>
+
+    <!-- SHARE -->
+    <div class="section">
+      <div class="card">
+        <div class="card-title">🔗 Share This Page</div>
+        <p style="font-size:12px;color:var(--muted2);font-family:var(--mono);line-height:1.7;margin-bottom:12px;">Blockchain data is public. Share this analysis with anyone.</p>
+        <div class="share-row">
+          <button class="btn-secondary" onclick="shareTwitter()">𝕏 Share on X</button>
+          <button class="btn-secondary" onclick="copyLink()">📋 Copy Link</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER NOTICE -->
+    <div class="section">
+      <div style="border:1px solid rgba(251,191,36,0.15);border-radius:14px;padding:16px 20px;background:rgba(251,191,36,0.03);display:flex;gap:12px;align-items:flex-start;">
+        <span style="font-size:16px;flex-shrink:0;margin-top:1px;">⚠️</span>
+        <p style="font-size:12px;color:var(--muted2);font-family:var(--mono);line-height:1.8;font-weight:400;">
+          <strong style="color:#fbbf24;">Not financial advice.</strong> All data is sourced from the public Ethereum blockchain and is for informational purposes only. cryptoucan.xyz is a read-only tool — we do not execute transactions, access private keys, or interact with any wallet. Do not make investment decisions based solely on this data.
+        </p>
+      </div>
+    </div>
+
+    <!-- SCAN ANOTHER -->
+    <div class="section">
+      <div class="card">
+        <div class="card-title">🔍 Scan Another Wallet</div>
+        <div class="search-again">
+          <span style="color:var(--muted2);font-size:13px;">⬡</span>
+          <input type="text" id="newAddress" placeholder="0x... or ENS name" />
+          <button class="btn-secondary" style="flex:none;padding:10px 18px;font-size:12px;" onclick="scanNew()">Scan →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="text-align:center;padding:40px 0 0;border-top:1px solid rgba(255,255,255,0.06);margin-top:20px;">
+      <p style="font-family:var(--mono);font-size:11px;color:var(--muted2);line-height:2;">
+        <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
+      <a href="#" style="font-family:var(--mono);background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;font-weight:700;">cryptoucan.xyz</a><br>
+        <a href="/about" style="color:var(--muted);text-decoration:none;">About</a> &nbsp;·&nbsp;
+        <a href="/contact" style="color:var(--muted);text-decoration:none;">Contact</a> &nbsp;·&nbsp;
+        <a href="/privacy" style="color:var(--muted);text-decoration:none;">Privacy</a> &nbsp;·&nbsp;
+        <a href="/terms" style="color:var(--muted);text-decoration:none;">Terms</a>
+      </p>
+      <p style="margin-top:12px;margin-bottom:12px;font-family:var(--mono);font-size:11px;color:var(--muted2);">
+        Every wallet has a story.
+      <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;"><img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;"><span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span></a>
+      </div>
+    </footer>`;
+
+  // Store data for share/prompt functions
+  window._walletData = data;
+  if (!window._updatedAt) window._updatedAt = Date.now();
+  // Populate prompt textarea
+  setTimeout(() => {
+    const box = document.getElementById('promptBox');
+    if (box) box.textContent = buildPrompt(data);
+  }, 100);
+
+  // Animate bars
+  setTimeout(() => {
+    // no bar animation needed (tag layout)
+  }, 300);
+
+  // Enter key on scan input
+  document.getElementById('newAddress').addEventListener('keydown', e => {
+    if (e.key === 'Enter') scanNew();
+  });
+}
+
+// ── Main ──────────────────────────────────────────────────────
+async function main() {
+  // Extract address from URL path: /address/0x...
+  const path = window.location.pathname;
+  const match = path.match(/\/address\/(.+)/);
+  if (!match) { showError('No address provided.'); return; }
+  const raw = decodeURIComponent(match[1]).trim().toLowerCase();
+  if (!raw) { showError('No address provided.'); return; }
+
+  // Basic client-side validation
+  const isHex  = /^0x[0-9a-fA-F]{40}$/.test(raw);
+  const isENS  = /\.eth$/i.test(raw);
+  if (!isHex && !isENS) {
+    showError('Invalid address: <code style="font-size:12px;">' + raw + '</code>');
+    return;
+  }
+
+  showLoading(raw);
+
+  // Dynamic SEO — update title/meta/canonical with actual address
+  const displayRaw = raw.endsWith('.eth') ? raw : raw.slice(0, 6) + '...' + raw.slice(-4);
+  document.title = `${displayRaw} | Ethereum Wallet Analysis — cryptoucan.xyz`;
+  const pageUrl = `https://cryptoucan.xyz/address/${raw}`;
+  document.getElementById('canonical-url')?.setAttribute('href', pageUrl);
+  document.getElementById('og-url')?.setAttribute('content', pageUrl);
+  document.getElementById('og-title')?.setAttribute('content', `${displayRaw} | Ethereum Wallet Analysis — cryptoucan.xyz`);
+  document.getElementById('og-description')?.setAttribute('content', `View ETH balance, token holdings, and transaction history for ${raw} on cryptoucan.xyz.`);
+
+
+  try {
+    const res  = await fetch(`${WORKER}/api/wallet/${encodeURIComponent(raw)}`);
+    const data = await res.json();
+
+    if (data.error) {
+      showError(data.error);
+      return;
+    }
+
+    window._walletData = data;
+    window._updatedAt = data._updatedAt || Date.now();
+    render(data);
+  } catch (e) {
+    showError('Failed to load wallet data. Please try again.');
   }
 }
+
+// ── Share / Prompt helpers ────────────────────────────────────
+function buildPrompt(d) {
+  return `Please analyze this Ethereum wallet:
+
+Address: ${d.address}${d.ensName ? '\nENS: ' + d.ensName : ''}
+Total Value: ~${fmtUSD(d.ethUSD)}
+ETH Balance: ${fmtETH(d.ethBalance)} (${fmtUSD(d.ethUSD)})
+Wallet Age: ${fmtAge(d.walletAgeDays)} (${sinceDate(d.firstTxDate)})
+Last Active: ${timeAgo(d.lastTxDate)}
+Total Transactions: ${d.sentTxCount ?? d.totalTxCount} sent, ${d.totalTxCount} total
+Tokens Held: ${d.topTokenSymbols.join(', ') || 'None detected'}
+Status: ${d.activityStatus}
+
+Recent activity:
+${d.transactions.map(tx => '- ' + tx.description + ' (' + timeAgo(new Date(tx.timestamp*1000).toISOString()) + ')').join('\n')}
+
+Please analyze:
+1. What type of user does this wallet suggest? (long-term holder, DeFi user, trader, etc.)
+2. What does their activity pattern look like?
+3. Any notable patterns or risks?
+4. Explain in simple, non-technical language.`;
+}
+
+function refreshWallet() {
+  const path = window.location.pathname;
+  const match = path.match(/\/address\/(.+)/);
+  if (!match) return;
+  const addr = match[1];
+  const WORKER = 'https://cryptoucan-api.winqi.workers.dev';
+
+  // Show spinner overlay so user knows something is happening
+  const overlay = document.createElement('div');
+  overlay.id = 'refresh-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,15,30,0.6);z-index:999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);';
+  overlay.innerHTML = '<div style="font-family:var(--mono);font-size:13px;color:var(--muted2);display:flex;align-items:center;gap:10px;"><span style="display:inline-block;width:16px;height:16px;border:2px solid var(--grad1);border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></span>Refreshing wallet data…</div>';
+  document.body.appendChild(overlay);
+
+  fetch(WORKER + '/api/wallet/' + addr + '?refresh=1')
+    .then(r => r.json())
+    .then(data => {
+      overlay.remove();
+      if (data.error) return;
+      window._walletData = data;
+      window._updatedAt = data._updatedAt || Date.now();
+      render(data);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    })
+    .catch(() => { overlay.remove(); });
+}
+
+function copyPrompt() {
+  const box = document.getElementById('promptBox');
+  const text = box ? box.textContent : buildPrompt(window._walletData);
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy & Ask AI'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+function shareTwitter() {
+  const d = window._walletData;
+  if (!d) return;
+  const name = d.ensName || shortAddr(d.address);
+  const text = `Just analyzed this Ethereum wallet on cryptoucan.xyz 🦜\n\n${name}\n💰 ${fmtUSD(d.ethUSD)}\n📅 ${fmtAge(d.walletAgeDays)} old · ${d.activityStatus}\n\ncryptoucan.xyz/address/${d.address}`;
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text), '_blank');
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('Link copied!');
+  });
+}
+
+function scanNew() {
+  const val = document.getElementById('newAddress').value.trim();
+  if (!val) return;
+  window.location.href = '/address/' + val.toLowerCase();
+}
+
+// Shimmer animation
+const style = document.createElement('style');
+style.textContent = '@keyframes shimmer { 0%,100%{opacity:0.4} 50%{opacity:0.8} }';
+document.head.appendChild(style);
+
+main();
 </script>
 </body>
 </html>
