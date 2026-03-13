@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | cryptoucan.xyz — Ethereum Wallet Analyzer</title>
+<meta name="description" content="Learn about cryptoucan.xyz, the Ethereum wallet analyzer built by AE Lab in Malaysia. Our mission is to make blockchain data readable for everyone.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<style>
+  :root {
+    --bg:        #0a0f1e;
+    --glass:     rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-hover:  rgba(255,255,255,0.07);
+    --grad1:     #4f8aff;
+    --grad2:     #a855f7;
+    --text:      #e8edf8;
+    --muted:     #cbd5e8;
+    --muted2:    #b0bfcf;
+    --green:     #34d399;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  .bg-orb {
+    position: fixed; border-radius: 50%;
+    filter: blur(120px); opacity: 0.10;
+    pointer-events: none; z-index: 0;
+    will-change: transform; transform: translateZ(0);
+  }
+  .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #4f8aff, transparent); top: -150px; left: -100px; }
+  .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent); top: 300px; right: -100px; }
+
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 75%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  }
+
+  /* NAV */
+  nav {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 20px; max-width: 760px; margin: 0 auto;
+  }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-text {
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .nav-back {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    text-decoration: none; display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--grad1); }
+
+  /* WRAP */
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 760px; margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding: 40px 0 48px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .page-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted2); margin-bottom: 16px;
+  }
+  .page-title {
+    font-family: var(--mono); font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700; line-height: 1.2;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 16px;
+  }
+  .page-sub {
+    font-size: 16px; color: var(--muted); font-weight: 300; max-width: 560px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .section:nth-child(1) { animation-delay: 0.05s; }
+  .section:nth-child(2) { animation-delay: 0.10s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.20s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.30s; }
+
+  /* CARD */
+  .card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  .card-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-title::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--glass-border), transparent);
+  }
+
+  /* PROSE */
+  .prose {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.9;
+  }
+  .prose p { margin-bottom: 18px; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose a { color: var(--grad1); text-decoration: none; }
+  .prose a:hover { text-decoration: underline; }
+
+  /* STAT GRID */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+  @media (max-width: 560px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+  .stat-item {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-value {
+    font-family: var(--mono); font-size: 22px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted2);
+  }
+
+  /* FEATURE LIST */
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 4px;
+  }
+  .feature-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .feature-icon {
+    font-size: 18px;
+    width: 36px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .feature-content h4 {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .feature-content p {
+    font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.7;
+  }
+
+  /* TECH STACK */
+  .tech-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .tech-row:last-child { border-bottom: none; }
+  .tech-name {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    color: var(--text); width: 140px; flex-shrink: 0;
+  }
+  .tech-desc {
+    font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6;
+  }
+  .tech-badge {
+    margin-left: auto;
+    font-family: var(--mono); font-size: 10px;
+    padding: 3px 10px; border-radius: 20px;
+    background: rgba(52,211,153,0.1); color: var(--green);
+    border: 1px solid rgba(52,211,153,0.2);
+    flex-shrink: 0;
+  }
+
+  /* CTA */
+  .cta-card {
+    background: linear-gradient(135deg, rgba(79,138,255,0.08), rgba(168,85,247,0.08));
+    border: 1px solid rgba(79,138,255,0.15);
+    border-radius: 20px;
+    padding: 36px 32px;
+    text-align: center;
+  }
+  .cta-title {
+    font-family: var(--mono); font-size: 18px; font-weight: 700;
+    color: var(--text); margin-bottom: 10px;
+  }
+  .cta-sub {
+    font-size: 14px; color: var(--muted); margin-bottom: 24px; font-weight: 300;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    border: none; border-radius: 14px;
+    padding: 14px 28px;
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    color: #fff; cursor: pointer; text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 20px rgba(79,138,255,0.25);
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 40px 0 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 20px;
+  }
+  footer p { font-family: var(--mono); font-size: 11px; color: var(--muted2); line-height: 2; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--grad1); }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+
+<nav>
+  <a href="/" class="logo" style="display:flex;align-items:center;gap:8px;">
+    <img src="/images/favicon.png" style="width:24px;height:24px;object-fit:contain;" alt="cryptoucan logo">
+    <span class="logo-text">cryptoucan.xyz</span>
+  </a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-label">About</div>
+    <img src="/images/favicon.png" style="width:100px;height:100px;object-fit:contain;display:block;margin-bottom:12px;" alt="cryptoucan logo">
+    <div class="page-title">About cryptoucan.xyz</div>
+    <p class="page-sub">We believe everyone should be able to understand what's happening on the blockchain — not just developers and data analysts.</p>
+  </div>
+
+  <!-- OUR STORY -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">📖 Our Story</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz was born out of a simple frustration. Every time someone wanted to look up an Ethereum wallet — whether it was their own, a friend's, or a public figure's — they were sent to Etherscan. Etherscan is a powerful and essential tool, but it was built for developers. Raw transaction hashes, hexadecimal inputs, contract bytecode — none of that means anything to the average person who just wants to know: <strong>what did this wallet actually do?</strong>
+        </p>
+        <p>
+          We set out to change that. cryptoucan.xyz is built by <strong>AE Lab</strong>, an independent software team based in <strong>Malaysia</strong>, with a focus on building tools that make Web3 more accessible to everyday users. We believe the blockchain is one of the most transparent financial systems ever created — but that transparency is meaningless if the data is unreadable.
+        </p>
+        <p>
+          Our goal is simple: take raw on-chain data and turn it into something a non-technical person can actually understand and act on. Not someday — right now, for free, in seconds.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISSION -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🎯 Our Mission</div>
+      <div class="prose">
+        <p>
+          The Ethereum blockchain processes millions of transactions every day. Behind each address is a person — a trader, a long-term holder, a DeFi explorer, a developer, or someone who bought their first ETH and hasn't touched it since. Each of those stories is recorded forever on-chain.
+        </p>
+        <p>
+          Our mission is to make those stories readable. <strong>Blockchain data, human language.</strong> That's the principle we design around. When you paste an address into cryptoucan.xyz, you shouldn't need to decode function selectors or parse token transfer events yourself. You should just see: this person staked ETH on Lido, swapped on Uniswap three times, received funds from Binance, and hasn't been active for two years.
+        </p>
+        <p>
+          We also believe in building tools that respect users. No sign-up required. No wallet connection. No tracking. You can look up any public Ethereum address — including your own — and get instant, clear insights without handing over any personal information to us.
+        </p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-value">0</div>
+          <div class="stat-label">Data stored</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">0</div>
+          <div class="stat-label">Sign-ups needed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Wallets you can scan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT YOU GET -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🔍 What cryptoucan.xyz Does</div>
+      <div class="prose" style="margin-bottom:24px;">
+        <p>
+          When you scan any Ethereum address on cryptoucan.xyz, we pull live data directly from the blockchain and present it in a way that makes immediate sense. Here's what you'll find on every wallet page:
+        </p>
+      </div>
+      <div class="feature-list">
+        <div class="feature-row">
+          <div class="feature-icon">📊</div>
+          <div class="feature-content">
+            <h4>Wallet Snapshot</h4>
+            <p>At a glance: total ETH value in USD, wallet age (down to the day of the first transaction), last activity date, and overall activity status — active, recent, moderate, or dormant.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">📈</div>
+          <div class="feature-content">
+            <h4>Asset Breakdown</h4>
+            <p>A visual breakdown of ETH holdings and token balances. We automatically filter out spam airdrops and phishing tokens — only real holdings are shown. Token prices via CoinGecko integration coming soon.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">🔄</div>
+          <div class="feature-content">
+            <h4>Notable Transactions in Plain English</h4>
+            <p>Instead of "0x38ed1739", you'll see "Swapped tokens on Uniswap" or "Staked ETH on Lido" or "Claimed rewards". We recognise major protocols, filter out noise, and surface the transactions that actually matter.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">📋</div>
+          <div class="feature-content">
+            <h4>AI Analysis Prompt</h4>
+            <p>Every wallet page includes a ready-made prompt you can copy and paste into ChatGPT or Claude for a deeper, personalised analysis. The prompt includes all the key wallet data pre-filled — just paste and ask.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">🔗</div>
+          <div class="feature-content">
+            <h4>Shareable Wallet URLs</h4>
+            <p>Every wallet has its own permanent URL at cryptoucan.xyz/address/0x... — bookmark it, share it, or link to it from anywhere. Each page is publicly accessible and search engine indexed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNOLOGY -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">⚙️ How It Works</div>
+      <div class="prose" style="margin-bottom:24px;">
+        <p>
+          cryptoucan.xyz is built on a modern, lightweight infrastructure designed for speed and reliability. We use a combination of public blockchain APIs and edge computing to deliver wallet data as fast as possible, anywhere in the world.
+        </p>
+      </div>
+      <div class="tech-row">
+        <div class="tech-name">Etherscan API v2</div>
+        <div class="tech-desc">All on-chain data — balances, transactions, token transfers, and wallet history — is sourced directly from Etherscan's API, one of the most trusted Ethereum data providers.</div>
+        <div class="tech-badge">Live data</div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-name">Cloudflare Workers</div>
+        <div class="tech-desc">Our backend runs on Cloudflare's global edge network. API keys are securely stored server-side and never exposed to the browser. Requests are processed close to your location for low latency.</div>
+        <div class="tech-badge">Edge compute</div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-name">Cloudflare Pages</div>
+        <div class="tech-desc">The frontend is a static site deployed on Cloudflare Pages — no servers to maintain, no cold starts, and fast load times globally.</div>
+        <div class="tech-badge">Global CDN</div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-name">ENS Resolution</div>
+        <div class="tech-desc">We support Ethereum Name Service (ENS) lookups, so you can type "vitalik.eth" instead of a 42-character hex address and get the same result.</div>
+        <div class="tech-badge">Supported</div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-name">CoinGecko</div>
+        <div class="tech-desc">ETH price data is sourced from CoinGecko's market API for accurate USD value calculations. Token price integration is on our roadmap.</div>
+        <div class="tech-badge">Coming soon</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIVACY -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🔒 Privacy Commitment</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz does not store any wallet data, search history, or user information. When you look up an address, we query the Ethereum blockchain in real time and return the results directly to your browser. Nothing is saved on our end.
+        </p>
+        <p>
+          All Ethereum wallet data displayed on cryptoucan.xyz is <strong>public on-chain information</strong>. The Ethereum blockchain is a public ledger — every transaction, balance, and token transfer is visible to anyone in the world. We are simply making that existing public data easier to read.
+        </p>
+        <p>
+          We do not require you to connect a wallet, create an account, or provide any personal information to use cryptoucan.xyz. You can scan any address — including your own — completely anonymously.
+        </p>
+        <p>
+          For full details, please refer to our <a href="/privacy">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY THE NAME -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title"><img src="/images/favicon.png" style="width:18px;height:18px;object-fit:contain;vertical-align:middle;margin-right:4px;" alt=""> Why "cryptoucan.xyz"?</div>
+      <div class="prose">
+        <p>
+          The name <strong>cryptoucan.xyz</strong> is a mashup of two words: <strong>Crypto</strong> and <strong>Toucan</strong>. The toucan is a bird known for its oversized, colourful beak — unmistakable, curious, and a little bit different from everything else in the jungle. That felt like the right spirit for what we were building.
+        </p>
+        <p>
+          But there's a second layer to it. Say it out loud: <em>crypto-you-can</em>. As in, <strong>crypto you can</strong> actually understand. That's the whole product in three words. Blockchain data has always been technically accessible but practically unreadable for most people. cryptoucan.xyz is our answer to that gap — crypto, made readable, for everyone.
+        </p>
+        <p>
+          The toucan also happens to be one of the most social birds around. It lives in groups, communicates constantly, and is known for being surprisingly smart. We like to think that describes the kind of community that gravitates toward tools like this — people who are curious, engaged, and want to actually understand what's going on, not just hodl blindly.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section">
+    <div class="cta-card">
+      <div class="cta-title">Ready to explore a wallet?</div>
+      <div class="cta-sub">Paste any Ethereum address or ENS name and get instant insights — no sign-up needed.</div>
+      <a href="/" class="btn-primary">Start Scanning</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
+      <a href="#" style="font-family:var(--mono);background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;font-weight:700;">cryptoucan.xyz</a>
+      <br>
+      <a href="/about">About</a> &nbsp;·&nbsp;
+      <a href="/contact">Contact</a> &nbsp;·&nbsp;
+      <a href="/privacy">Privacy</a> &nbsp;·&nbsp;
+      <a href="/terms">Terms</a>
+    </p>
+    <p style="margin-top:12px;margin-bottom:12px;">
+      Every wallet has a story.
+    <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;"><img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;"><span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span></a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

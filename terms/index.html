@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions | cryptoucan.xyz — Ethereum Wallet Analyzer</title>
+<meta name="description" content="Terms and Conditions for cryptoucan.xyz. Please read before using our Ethereum wallet analyzer.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<style>
+  :root {
+    --bg:           #0a0f1e;
+    --glass:        rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --grad1:        #4f8aff;
+    --grad2:        #a855f7;
+    --text:         #e8edf8;
+    --muted:        #cbd5e8;
+    --muted2:       #b0bfcf;
+    --mono:         'JetBrains Mono', monospace;
+    --sans:         'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.10; will-change: transform; transform: translateZ(0); pointer-events: none; z-index: 0; }
+  .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #4f8aff, transparent); top: -150px; left: -100px; }
+  .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent); top: 300px; right: -100px; }
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 75%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  }
+
+  nav {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 20px; max-width: 760px; margin: 0 auto;
+  }
+  .logo { text-decoration: none; }
+  .logo-text {
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .nav-back { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--grad1); }
+
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header { padding: 40px 0 40px; animation: fadeUp 0.5s ease both; }
+  .page-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2); margin-bottom: 16px; }
+  .page-title {
+    font-family: var(--mono); font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 12px;
+  }
+  .page-sub { font-size: 13px; color: var(--muted2); font-family: var(--mono); }
+
+  .section { margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+  .section:nth-child(1)  { animation-delay: 0.05s; }
+  .section:nth-child(2)  { animation-delay: 0.08s; }
+  .section:nth-child(3)  { animation-delay: 0.11s; }
+  .section:nth-child(4)  { animation-delay: 0.14s; }
+  .section:nth-child(5)  { animation-delay: 0.17s; }
+  .section:nth-child(6)  { animation-delay: 0.20s; }
+  .section:nth-child(7)  { animation-delay: 0.23s; }
+  .section:nth-child(8)  { animation-delay: 0.26s; }
+  .section:nth-child(9)  { animation-delay: 0.29s; }
+  .section:nth-child(10) { animation-delay: 0.32s; }
+  .section:nth-child(11) { animation-delay: 0.35s; }
+  .section:nth-child(12) { animation-delay: 0.38s; }
+
+  .card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px; padding: 28px 32px;
+  }
+  .card-title {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted2); margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--glass-border), transparent); }
+
+  .prose { font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.9; }
+  .prose p { margin-bottom: 16px; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose a { color: var(--grad1); text-decoration: none; }
+  .prose a:hover { text-decoration: underline; }
+  .prose ul { margin: 12px 0 16px 20px; }
+  .prose ul li { margin-bottom: 8px; font-size: 14px; color: var(--muted); font-weight: 300; }
+
+  .link-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .link-item {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.025); border: 1px solid var(--glass-border);
+    border-radius: 10px; padding: 12px 16px;
+    font-family: var(--mono); font-size: 12px;
+  }
+  .link-item a { color: var(--grad1); text-decoration: none; }
+  .link-item a:hover { text-decoration: underline; }
+  .link-item .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--grad1), var(--grad2)); }
+
+  .contact-cta {
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(79,138,255,0.06); border: 1px solid rgba(79,138,255,0.15);
+    border-radius: 14px; padding: 20px 24px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .contact-cta p { font-size: 14px; color: var(--muted); flex: 1; font-weight: 300; }
+  .btn-contact {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    border: none; border-radius: 12px; padding: 12px 22px;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    color: #fff; cursor: pointer; text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(79,138,255,0.2); flex-shrink: 0;
+  }
+  .btn-contact:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  footer { text-align: center; padding: 40px 0 0; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 20px; }
+  footer p { font-family: var(--mono); font-size: 11px; color: var(--muted2); line-height: 2; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--grad1); }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+
+<nav>
+  <a href="/" class="logo" style="display:flex;align-items:center;gap:8px;"><img src="/images/favicon.png" style="width:24px;height:24px;object-fit:contain;" alt="cryptoucan logo"><span class="logo-text">cryptoucan.xyz</span></a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="page-header">
+    <div class="page-label">Legal</div>
+    <div class="page-title">Terms & Conditions</div>
+    <p class="page-sub">Last Updated: 12 March 2026</p>
+  </div>
+
+  <!-- ACCEPTANCE -->
+  <div class="section">
+    <div class="card">
+      <div class="prose">
+        <p>
+          By accessing or using cryptoucan.xyz, you agree to be bound by these Terms and Conditions. Please read them carefully before using our Service. If you do not agree to any part of these terms, you may not use cryptoucan.xyz.
+        </p>
+        <p>
+          cryptoucan.xyz is operated by <strong>AE Lab</strong>, a software development team based in Malaysia. We reserve the right to update these Terms at any time. Continued use of the Service after any changes constitutes your acceptance of the revised Terms.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESCRIPTION OF SERVICE -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🔍 Description of Service</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz is a <strong>read-only Ethereum blockchain data viewer</strong>. We retrieve publicly available on-chain data — including wallet balances, transaction history, and token holdings — from the Ethereum blockchain via third-party APIs, and present that data in a human-readable format.
+        </p>
+        <p>
+          <strong>cryptoucan.xyz does not execute transactions, access private keys, connect to wallets, move funds, or interact with the blockchain in any way on your behalf.</strong> We have no ability to modify, freeze, or affect any wallet or its contents. Scanning an address on cryptoucan.xyz has no effect whatsoever on that wallet.
+        </p>
+        <p>
+          All blockchain data displayed on this website is already publicly accessible to anyone in the world via the Ethereum network. We are a presentation layer, not a data source.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOT FINANCIAL ADVICE -->
+  <div class="section">
+    <div class="card" style="border-color: rgba(251,191,36,0.2); background: rgba(251,191,36,0.04);">
+      <div class="card-title" style="color:#fbbf24;">⚠️ Not Financial Advice</div>
+      <div class="prose">
+        <p>
+          <strong style="color:#fbbf24;">Nothing on cryptoucan.xyz constitutes financial advice, investment advice, trading advice, or any recommendation to buy, sell, or hold any cryptocurrency or digital asset.</strong>
+        </p>
+        <p>
+          All information is provided for informational and educational purposes only. Cryptocurrency investments carry significant risk, including the possible loss of your entire investment. Past wallet activity is not indicative of future performance.
+        </p>
+        <p>
+          You should always conduct your own independent research and consult a qualified financial professional before making any financial or investment decisions. AE Lab accepts no liability for any financial losses arising from reliance on data presented on this website.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCEPTABLE USE -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">✅ Acceptable Use</div>
+      <div class="prose">
+        <p>
+          You agree to use cryptoucan.xyz only for lawful purposes and in a manner that does not infringe the rights of others. You must not use this Service to:
+        </p>
+        <ul>
+          <li>Scrape, crawl, or systematically extract data from the website in an automated manner without prior written permission from AE Lab</li>
+          <li>Attempt to overload, disrupt, or impair the performance of our servers or infrastructure</li>
+          <li>Use data obtained from cryptoucan.xyz to harass, track, or harm any individual</li>
+          <li>Misrepresent information obtained from this website as your own original analysis or research</li>
+          <li>Attempt to reverse engineer, copy, or reproduce any part of this Service without permission</li>
+        </ul>
+        <p>
+          AE Lab reserves the right to restrict or terminate access to the Service for any user who violates these conditions, at our sole discretion and without notice.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTELLECTUAL PROPERTY -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">©️ Intellectual Property</div>
+      <div class="prose">
+        <p>
+          The cryptoucan.xyz website, including its design, layout, code, branding, and content, is the intellectual property of AE Lab. All rights are reserved. You may not copy, modify, distribute, or create derivative works from any part of this Service without our express written permission.
+        </p>
+        <p>
+          Data retrieved from the Ethereum blockchain is public by nature and not owned by AE Lab. However, the way in which we present, format, and display that data is original work owned by AE Lab.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THIRD-PARTY SERVICES -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🔗 Third-Party Services</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz depends on third-party services to function. By using our Service, you also agree to the terms of these providers:
+        </p>
+      </div>
+      <div class="link-list">
+        <div class="link-item"><div class="dot"></div><a href="https://policies.google.com/terms" target="_blank" rel="noopener">Google Play Services</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://www.google.com/adsense/new/localized-terms" target="_blank" rel="noopener">Google AdSense</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://developers.google.com/admob/terms" target="_blank" rel="noopener">Google AdMob</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://etherscan.io/terms" target="_blank" rel="noopener">Etherscan</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://www.coingecko.com/en/terms" target="_blank" rel="noopener">CoinGecko</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://www.cloudflare.com/terms/" target="_blank" rel="noopener">Cloudflare</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA ACCURACY -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">📊 Data Accuracy</div>
+      <div class="prose">
+        <p>
+          While we strive to display accurate and up-to-date blockchain data, cryptoucan.xyz relies on third-party data providers including Etherscan and CoinGecko. We cannot guarantee that all data displayed is complete, accurate, or current at all times.
+        </p>
+        <p>
+          Blockchain data can be subject to reorganisations, API delays, or data provider outages. Transaction classifications (e.g. "Swapped on Uniswap") are generated programmatically and may not always be perfectly accurate.
+        </p>
+        <p>
+          AE Lab accepts no liability for any loss or damage arising from inaccuracies in the data presented on cryptoucan.xyz. For authoritative blockchain data, please refer directly to <a href="https://etherscan.io" target="_blank" rel="noopener">Etherscan</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVAILABILITY -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">⚡ Service Availability</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz is provided as a free service on an "as is" and "as available" basis. We do not guarantee that the Service will be available at all times, uninterrupted, or error-free. We reserve the right to modify, suspend, or discontinue the Service at any time without notice.
+        </p>
+        <p>
+          AE Lab shall not be liable for any loss or inconvenience caused by unavailability of the Service, including downtime resulting from maintenance, infrastructure issues, or third-party API failures.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIMITATION OF LIABILITY -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🛡️ Limitation of Liability</div>
+      <div class="prose">
+        <p>
+          To the fullest extent permitted by applicable law, AE Lab shall not be liable for any indirect, incidental, special, consequential, or punitive damages — including but not limited to loss of profits, data, or goodwill — arising from your use of or inability to use cryptoucan.xyz.
+        </p>
+        <p>
+          AE Lab's total liability to you for any claim arising out of or related to the use of this Service shall not exceed the amount you have paid to AE Lab in the twelve months preceding the claim. As cryptoucan.xyz is a free service, this amount is zero.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOVERNING LAW -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">⚖️ Governing Law</div>
+      <div class="prose">
+        <p>
+          These Terms and Conditions are governed by and construed in accordance with the laws of <strong>Malaysia</strong>. Any disputes arising in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Malaysia.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHILDREN -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">👶 Children's Use</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz is not directed at children under the age of 13. We do not knowingly collect any information from children under 13. If you are a parent or guardian and believe your child has used this Service in a way that raises concerns, please contact us.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGES -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">📝 Changes to These Terms</div>
+      <div class="prose">
+        <p>
+          We may update these Terms and Conditions from time to time. Any changes will be effective immediately upon posting to this page, with the "Last Updated" date revised accordingly. We advise you to review this page periodically.
+        </p>
+        <p>
+          Continued use of cryptoucan.xyz after any changes to these Terms constitutes your acceptance of the updated Terms.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">✉️ Contact Us</div>
+      <div class="prose">
+        <p>If you have any questions or suggestions about these Terms and Conditions, please don't hesitate to reach out.</p>
+      </div>
+      <div class="contact-cta">
+        <p>Our team at AE Lab is happy to answer any questions about these terms.</p>
+        <a href="/cdn-cgi/l/email-protection#8cede9e0edeea2e1f5ccebe1ede5e0a2efe3e1" class="btn-contact">Contact Us →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
+      <a href="/" style="font-family:var(--mono);background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;font-weight:700;">cryptoucan.xyz</a>
+      <br>
+      <a href="/about">About</a> &nbsp;·&nbsp;
+      <a href="/contact">Contact</a> &nbsp;·&nbsp;
+      <a href="/privacy">Privacy</a> &nbsp;·&nbsp;
+      <a href="/terms">Terms</a>
+    </p>
+    <p style="margin-top:12px;margin-bottom:12px;">
+      Every wallet has a story.
+    <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;"><img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;"><span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span></a>
+    </div>
+  </div>
+  </footer>
+
+</div>
+</body>
+</html>

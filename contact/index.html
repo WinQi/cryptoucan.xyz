@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | cryptoucan.xyz — Ethereum Wallet Analyzer</title>
+<meta name="description" content="Get in touch with the cryptoucan.xyz team. We'd love to hear your feedback, bug reports, or partnership inquiries.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<style>
+  :root {
+    --bg:        #0a0f1e;
+    --glass:     rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-hover:  rgba(255,255,255,0.07);
+    --grad1:     #4f8aff;
+    --grad2:     #a855f7;
+    --text:      #e8edf8;
+    --muted:     #cbd5e8;
+    --muted2:    #b0bfcf;
+    --green:     #34d399;
+    --red:       #f87171;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.10; will-change: transform; transform: translateZ(0); pointer-events: none; z-index: 0; }
+  .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #4f8aff, transparent); top: -150px; left: -100px; }
+  .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent); top: 300px; right: -100px; }
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 75%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  }
+
+  nav {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 20px; max-width: 760px; margin: 0 auto;
+  }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-text {
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .nav-back { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--grad1); }
+
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header { padding: 40px 0 48px; animation: fadeUp 0.5s ease both; }
+  .page-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2); margin-bottom: 16px; }
+  .page-title {
+    font-family: var(--mono); font-size: clamp(28px, 5vw, 42px); font-weight: 700; line-height: 1.2;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 16px;
+  }
+  .page-sub { font-size: 16px; color: var(--muted); font-weight: 300; max-width: 520px; }
+
+  .section { margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+  .section:nth-child(1) { animation-delay: 0.05s; }
+  .section:nth-child(2) { animation-delay: 0.10s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.20s; }
+
+  .card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px; padding: 32px;
+  }
+  .card-title {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted2); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--glass-border), transparent); }
+
+  .prose { font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.9; }
+  .prose p { margin-bottom: 18px; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--text); font-weight: 500; }
+
+  /* EMAIL CTA */
+  .email-block {
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(79,138,255,0.06);
+    border: 1px solid rgba(79,138,255,0.15);
+    border-radius: 14px; padding: 20px 24px;
+    margin-top: 24px; flex-wrap: wrap;
+  }
+  .email-icon { font-size: 24px; flex-shrink: 0; }
+  .email-text { flex: 1; }
+  .email-text p { font-size: 12px; color: var(--muted2); font-family: var(--mono); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .email-address {
+    font-family: var(--mono); font-size: 15px; font-weight: 600;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .btn-email {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    border: none; border-radius: 12px; padding: 12px 22px;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    color: #fff; cursor: pointer; text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(79,138,255,0.2);
+    flex-shrink: 0;
+  }
+  .btn-email:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* CONTACT TOPICS */
+  .topic-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-top: 4px;
+  }
+  @media (max-width: 500px) { .topic-grid { grid-template-columns: 1fr; } }
+  .topic-item {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px; padding: 18px 20px;
+  }
+  .topic-item h4 { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .topic-item p { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 40px 0 0; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 20px; }
+  footer p { font-family: var(--mono); font-size: 11px; color: var(--muted2); line-height: 2; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--grad1); }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+
+<nav>
+  <a href="/" class="logo" style="display:flex;align-items:center;gap:8px;"><img src="/images/favicon.png" style="width:24px;height:24px;object-fit:contain;" alt="cryptoucan logo"><span class="logo-text">cryptoucan.xyz</span></a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-label">Contact</div>
+    <div class="page-title">Get in Touch</div>
+    <p class="page-sub">Have a question, found a bug, or just want to say hi? We'd love to hear from you.</p>
+  </div>
+
+  <!-- EMAIL -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">✉️ Contact Us</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz is built and maintained by <strong>AE Lab</strong>, a small independent software team based in Malaysia. We read every email we receive and aim to respond within 1–3 business days.
+        </p>
+        <p>
+          Whether you've spotted a bug, have a feature request, or want to explore a partnership — drop us an email and we'll get back to you.
+        </p>
+      </div>
+      <div class="email-block">
+        <div class="email-icon">📬</div>
+        <div class="email-text">
+          <p>Reach the AE Lab team directly</p>
+          <div style="font-size:13px;color:var(--muted);font-weight:300;">We'll get back to you within 1–3 business days.</div>
+        </div>
+        <a href="/cdn-cgi/l/email-protection#a0c1c5ccc1c28ecdd9e0c7cdc1c9cc8ec3cfcd" class="btn-email">Send Email →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT TO WRITE ABOUT -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">💬 What Can You Write To Us About?</div>
+      <div class="topic-grid">
+        <div class="topic-item">
+          <h4>🐛 Bug Reports</h4>
+          <p>Something not working as expected? A wallet showing the wrong data, a broken layout, or an error you can't get past — let us know and we'll look into it.</p>
+        </div>
+        <div class="topic-item">
+          <h4>💡 Feature Requests</h4>
+          <p>Have an idea that would make cryptoucan.xyz more useful? We're actively building and we genuinely consider every suggestion that comes in.</p>
+        </div>
+        <div class="topic-item">
+          <h4>🤝 Partnerships</h4>
+          <p>Interested in collaborating, integrating our data, or exploring a business opportunity? We're open to conversations with teams building in the Web3 space.</p>
+        </div>
+        <div class="topic-item">
+          <h4>📰 Press & Media</h4>
+          <p>Writing about Ethereum tools, blockchain analytics, or Web3 accessibility? We're happy to answer questions or provide context for your story.</p>
+        </div>
+        <div class="topic-item">
+          <h4>🔒 Security Issues</h4>
+          <p>Found a security vulnerability? Please report it responsibly by emailing us directly. We take security seriously and will respond promptly to any valid reports.</p>
+        </div>
+        <div class="topic-item">
+          <h4>👋 General Feedback</h4>
+          <p>Just want to tell us what you think of the product? Positive or negative — we appreciate honest feedback. It helps us build something people actually want to use.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESPONSE TIME -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">⏱️ What to Expect</div>
+      <div class="prose">
+        <p>
+          We're a small team, but we take every message seriously. Here's what you can generally expect after reaching out:
+        </p>
+        <p>
+          <strong>Bug reports and technical issues</strong> — we aim to acknowledge these within 24 hours and follow up with a fix or update as soon as possible. If you can include your browser, operating system, and the wallet address you were trying to scan, it helps us reproduce the issue faster.
+        </p>
+        <p>
+          <strong>Feature requests and general feedback</strong> — we read every one of these, even if we can't always reply individually. The most requested features have a strong influence on what we prioritise next.
+        </p>
+        <p>
+          <strong>Partnership and media inquiries</strong> — we'll get back to you within 1–3 business days. Please include as much context as possible about your project or publication so we can give you a useful response.
+        </p>
+        <p>
+          All data displayed on cryptoucan.xyz comes from the public Ethereum blockchain via Etherscan's API. If you notice a discrepancy between what we show and what you see on Etherscan directly, please include the wallet address and a screenshot — that information helps us identify and fix data processing issues quickly.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
+      <a href="#" style="font-family:var(--mono);background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;font-weight:700;">cryptoucan.xyz</a>
+      <br>
+      <a href="/about">About</a> &nbsp;·&nbsp;
+      <a href="/contact">Contact</a> &nbsp;·&nbsp;
+      <a href="/privacy">Privacy</a> &nbsp;·&nbsp;
+      <a href="/terms">Terms</a>
+    </p>
+    <p style="margin-top:12px;margin-bottom:12px;">
+      Every wallet has a story.
+    <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;"><img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;"><span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span></a>
+    </div>
+  </div>
+  </footer>
+
+</div>
+</body>
+</html>

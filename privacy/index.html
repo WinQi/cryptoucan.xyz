@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | cryptoucan.xyz — Ethereum Wallet Analyzer</title>
+<meta name="description" content="Privacy Policy for cryptoucan.xyz. Learn how AE Lab handles your data when you use our Ethereum wallet analyzer.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<style>
+  :root {
+    --bg:           #0a0f1e;
+    --glass:        rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --grad1:        #4f8aff;
+    --grad2:        #a855f7;
+    --text:         #e8edf8;
+    --muted:        #cbd5e8;
+    --muted2:       #b0bfcf;
+    --mono:         'JetBrains Mono', monospace;
+    --sans:         'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.10; will-change: transform; transform: translateZ(0); pointer-events: none; z-index: 0; }
+  .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #4f8aff, transparent); top: -150px; left: -100px; }
+  .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent); top: 300px; right: -100px; }
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 75%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  }
+
+  nav {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 20px; max-width: 760px; margin: 0 auto;
+  }
+  .logo { text-decoration: none; }
+  .logo-text {
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .nav-back { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--grad1); }
+
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header { padding: 40px 0 40px; animation: fadeUp 0.5s ease both; }
+  .page-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2); margin-bottom: 16px; }
+  .page-title {
+    font-family: var(--mono); font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.2;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 12px;
+  }
+  .page-sub { font-size: 13px; color: var(--muted2); font-family: var(--mono); }
+
+  .section { margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+  .section:nth-child(1)  { animation-delay: 0.05s; }
+  .section:nth-child(2)  { animation-delay: 0.08s; }
+  .section:nth-child(3)  { animation-delay: 0.11s; }
+  .section:nth-child(4)  { animation-delay: 0.14s; }
+  .section:nth-child(5)  { animation-delay: 0.17s; }
+  .section:nth-child(6)  { animation-delay: 0.20s; }
+  .section:nth-child(7)  { animation-delay: 0.23s; }
+  .section:nth-child(8)  { animation-delay: 0.26s; }
+  .section:nth-child(9)  { animation-delay: 0.29s; }
+  .section:nth-child(10) { animation-delay: 0.32s; }
+  .section:nth-child(11) { animation-delay: 0.35s; }
+
+  .card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px; padding: 28px 32px;
+  }
+  .card-title {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted2); margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--glass-border), transparent); }
+
+  .prose { font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.9; }
+  .prose p { margin-bottom: 16px; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose a { color: var(--grad1); text-decoration: none; }
+  .prose a:hover { text-decoration: underline; }
+  .prose ul { margin: 12px 0 16px 20px; }
+  .prose ul li { margin-bottom: 8px; font-size: 14px; color: var(--muted); font-weight: 300; }
+
+  /* third-party links list */
+  .link-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .link-item {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.025); border: 1px solid var(--glass-border);
+    border-radius: 10px; padding: 12px 16px;
+    font-family: var(--mono); font-size: 12px;
+  }
+  .link-item a { color: var(--grad1); text-decoration: none; }
+  .link-item a:hover { text-decoration: underline; }
+  .link-item .dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+  }
+
+  /* contact CTA */
+  .contact-cta {
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(79,138,255,0.06); border: 1px solid rgba(79,138,255,0.15);
+    border-radius: 14px; padding: 20px 24px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .contact-cta p { font-size: 14px; color: var(--muted); flex: 1; font-weight: 300; }
+  .btn-contact {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    border: none; border-radius: 12px; padding: 12px 22px;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    color: #fff; cursor: pointer; text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(79,138,255,0.2); flex-shrink: 0;
+  }
+  .btn-contact:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  footer { text-align: center; padding: 40px 0 0; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 20px; }
+  footer p { font-family: var(--mono); font-size: 11px; color: var(--muted2); line-height: 2; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--grad1); }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+
+<nav>
+  <a href="/" class="logo" style="display:flex;align-items:center;gap:8px;"><img src="/images/favicon.png" style="width:24px;height:24px;object-fit:contain;" alt="cryptoucan logo"><span class="logo-text">cryptoucan.xyz</span></a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="page-header">
+    <div class="page-label">Legal</div>
+    <div class="page-title">Privacy Policy</div>
+    <p class="page-sub">Last Updated: 12 March 2026</p>
+  </div>
+
+  <!-- INTRO -->
+  <div class="section">
+    <div class="card">
+      <div class="prose">
+        <p>
+          Thank you for using cryptoucan.xyz. This Privacy Policy is designed to help you understand how <strong>AE Lab</strong> collects, uses, and safeguards your information when you use our website (<strong>cryptoucan.xyz</strong>) and, in future, our Android application.
+        </p>
+        <p>
+          Please read this policy carefully. By using our Service, you agree to the collection and use of information as described here. AE Lab built cryptoucan.xyz as a free service, provided at no cost and intended for use as is.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEBSITE DATA -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🌐 Website (cryptoucan.xyz)</div>
+      <div class="prose">
+        <p>
+          When you use cryptoucan.xyz, any Ethereum wallet address you enter is used solely to query publicly available on-chain data via the Etherscan API. <strong>We do not store, log, or transmit any wallet addresses or search history on our servers.</strong> All data is fetched in real time and returned directly to your browser.
+        </p>
+        <p>
+          The Ethereum blockchain is a public ledger. All wallet data displayed on cryptoucan.xyz — including balances, transactions, and token holdings — is already publicly accessible to anyone in the world. We are making that existing public information easier to read.
+        </p>
+        <p>
+          No account creation is required. No wallet connection is needed. You can use cryptoucan.xyz completely anonymously.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADSENSE -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">📢 Advertising — Google AdSense</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz uses <strong>Google AdSense</strong> to display advertisements. Google AdSense uses cookies — including the DoubleClick cookie — to serve ads based on your prior visits to this website and other websites across the internet.
+        </p>
+        <p>
+          Third-party vendors, including Google, use these cookies to serve ads based on a user's browsing activity. This allows Google to show you ads that may be relevant to your interests.
+        </p>
+        <p>
+          You may opt out of personalised advertising at any time by visiting:
+        </p>
+        <ul>
+          <li><a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads Settings</a></li>
+          <li><a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">www.aboutads.info/choices</a></li>
+        </ul>
+        <p>
+          Opting out will not remove ads entirely — it means the ads shown to you will no longer be based on your browsing history.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMOB -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">📱 Android App — Google AdMob</div>
+      <div class="prose">
+        <p>
+          We are developing a cryptoucan.xyz Android application, which will be made available on the Google Play Store. The Android app will use <strong>Google AdMob</strong> to display in-app advertisements.
+        </p>
+        <p>
+          AdMob is Google's mobile advertising platform. It may collect certain device information and usage data in order to serve relevant ads within the app. This may include your device's advertising ID, IP address, device type, and operating system version.
+        </p>
+        <p>
+          You can opt out of personalised ads on Android by going to <strong>Settings → Google → Ads → Opt out of Ads Personalisation</strong> on your device.
+        </p>
+        <p>
+          This section will be updated with additional detail when the Android app is released. For now, please refer to Google's AdMob privacy policy for full information on how AdMob handles data.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COOKIES -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🍪 Cookies</div>
+      <div class="prose">
+        <p>
+          Cookies are small data files stored on your device when you visit a website. cryptoucan.xyz itself does not set any first-party cookies. However, third-party services we use — including Google AdSense — may set their own cookies on your device.
+        </p>
+        <p>
+          These cookies help third-party services deliver relevant advertisements and understand how users interact with websites. By continuing to use cryptoucan.xyz, you consent to the use of cookies by these third-party services.
+        </p>
+        <p>
+          You can control or delete cookies at any time through your browser settings. Note that disabling cookies may affect the display of advertisements on the site.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOG DATA -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">📋 Log Data</div>
+      <div class="prose">
+        <p>
+          In the event of an error or issue with our Service, we may collect data through third-party tools called Log Data. This may include information such as your device's IP address, browser type, operating system version, the pages you visited on our site, the time and date of your visit, and other diagnostic statistics.
+        </p>
+        <p>
+          This data is used solely for the purpose of diagnosing and fixing technical issues. It is not used to identify individual users and is not shared with third parties outside of our service providers.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THIRD-PARTY SERVICES -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🔗 Third-Party Services</div>
+      <div class="prose">
+        <p>
+          cryptoucan.xyz relies on the following third-party services. Each operates under its own privacy policy, which we encourage you to review:
+        </p>
+      </div>
+      <div class="link-list">
+        <div class="link-item"><div class="dot"></div><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Play Services</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://support.google.com/adsense/answer/48182" target="_blank" rel="noopener">Google AdSense</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">Google AdMob</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://etherscan.io/privacyPolicy" target="_blank" rel="noopener">Etherscan</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://www.coingecko.com/en/privacy" target="_blank" rel="noopener">CoinGecko</a></div>
+        <div class="link-item"><div class="dot"></div><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICE PROVIDERS -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🏢 Service Providers</div>
+      <div class="prose">
+        <p>
+          We may employ third-party companies and individuals to facilitate our Service, provide the Service on our behalf, perform Service-related tasks, or assist in analysing how our Service is used. These third parties have access to your information only to perform tasks assigned to them and are obligated not to disclose or use it for any other purpose.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🔒 Security</div>
+      <div class="prose">
+        <p>
+          We strive to use commercially acceptable means of protecting your information. Our backend runs on Cloudflare's global edge network, and API keys are stored securely server-side and never exposed to the browser.
+        </p>
+        <p>
+          However, no method of transmission over the internet or method of electronic storage is 100% secure. While we strive to protect your data, we cannot guarantee its absolute security.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHILDREN -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">👶 Children's Privacy</div>
+      <div class="prose">
+        <p>
+          Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13. If we become aware that a child under 13 has provided us with personal information, we will take immediate steps to delete it. If you are a parent or guardian and believe your child has provided us with personal data, please contact us.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINKS -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">🌍 Links to Other Sites</div>
+      <div class="prose">
+        <p>
+          Our Service may contain links to external websites not operated by us. We strongly advise you to review the Privacy Policy of any third-party sites you visit. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGES -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">📝 Changes to This Privacy Policy</div>
+      <div class="prose">
+        <p>
+          We may update this Privacy Policy from time to time. Any changes will be effective immediately upon posting to this page, and the "Last Updated" date at the top will be revised accordingly. We advise you to review this page periodically for any changes.
+        </p>
+        <p>
+          Continued use of cryptoucan.xyz after any changes to this Privacy Policy constitutes your acceptance of the updated terms.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="section">
+    <div class="card" style="border-color: rgba(251,191,36,0.2); background: rgba(251,191,36,0.04);">
+      <div class="card-title" style="color:#fbbf24;">⚠️ Disclaimer</div>
+      <div class="prose">
+        <p>
+          <strong style="color:#fbbf24;">cryptoucan.xyz is not a financial advisor, broker, or trading platform.</strong> Nothing on this website constitutes financial advice, investment advice, trading advice, or any other kind of advice.
+        </p>
+        <p>
+          All data displayed on cryptoucan.xyz — including ETH balances, token holdings, transaction history, and wallet activity — is sourced from the public Ethereum blockchain and presented for <strong>informational purposes only</strong>. This information should not be relied upon as a basis for making financial or investment decisions.
+        </p>
+        <p>
+          <strong>cryptoucan.xyz does not execute, facilitate, or have any involvement in any blockchain transactions.</strong> We are a read-only data tool. We do not have access to any private keys, we cannot move funds, and we do not interact with any wallet on your behalf. Scanning a wallet address on cryptoucan.xyz has no effect whatsoever on that wallet or its contents.
+        </p>
+        <p>
+          Cryptocurrency markets are highly volatile. Past activity visible in a wallet's transaction history does not indicate future performance. Always do your own research and consult a qualified financial professional before making any investment decisions.
+        </p>
+        <p>
+          AE Lab accepts no liability for any financial loss, damage, or consequences arising from the use of information presented on cryptoucan.xyz.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">✉️ Contact Us</div>
+      <div class="prose">
+        <p>If you have any questions or suggestions about this Privacy Policy, please don't hesitate to reach out to us.</p>
+      </div>
+      <div class="contact-cta">
+        <p>Our team at AE Lab is happy to answer any privacy-related questions.</p>
+        <a href="/cdn-cgi/l/email-protection#ee8f8b828f8cc08397ae89838f8782c08d8183" class="btn-contact">Contact Us →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
+      <a href="/" style="font-family:var(--mono);background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;font-weight:700;">cryptoucan.xyz</a>
+      <br>
+      <a href="/about">About</a> &nbsp;·&nbsp;
+      <a href="/contact">Contact</a> &nbsp;·&nbsp;
+      <a href="/privacy">Privacy</a> &nbsp;·&nbsp;
+      <a href="/terms">Terms</a>
+    </p>
+    <p style="margin-top:12px;margin-bottom:12px;">
+      Every wallet has a story.
+    <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;"><img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;"><span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span></a>
+    </div>
+  </div>
+  </footer>
+
+</div>
+</body>
+</html>
