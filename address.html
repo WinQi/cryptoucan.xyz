@@ -57,9 +57,10 @@
 
   .stars {
     position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    will-change: transform; transform: translateZ(0);
     background-image:
-      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.12) 0%, transparent 100%),
       radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
       radial-gradient(1px 1px at 70% 75%, rgba(255,255,255,0.2) 0%, transparent 100%),
       radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
@@ -330,7 +331,7 @@
   <a href="/" class="nav-back">← New scan</a>
 </nav>
 
-<div class="wrap" id="main-content">
+<div class="wrap" id="main-content" style="isolation:isolate;">
   </footer>
 
 </div>
@@ -572,8 +573,8 @@ function render(data) {
           </div>
           <div class="snap-item">
             <div class="snap-label">Wallet Age</div>
-            <div class="snap-value">${sinceDate(data.firstTxDate)}</div>
-            <div class="snap-sub">${fmtAge(data.walletAgeDays)}</div>
+            <div class="snap-value">${fmtAge(data.walletAgeDays)}</div>
+            <div class="snap-sub">${sinceDate(data.firstTxDate)}</div>
           </div>
           <div class="snap-item">
             <div class="snap-label">Last Active</div>
