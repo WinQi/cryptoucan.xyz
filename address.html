@@ -426,7 +426,7 @@ function showError(msg) {
 }
 
 function showLoading(address) {
-  document.title = shortAddr(address) + ' | CryptoToucan';
+  document.title = shortAddr(address) + ' | cryptoucan.xyz';
   document.getElementById('main-content').innerHTML = `
     <div class="section">
       <div class="addr-header">
@@ -485,7 +485,7 @@ function render(data) {
   const avgGas = avgGasRaw > 0 ? avgGasRaw.toFixed(4) + ' ETH' : '—';
 
   // Title
-  document.title = displayName + ' Wallet Analysis | CryptoToucan';
+  document.title = displayName + ' Wallet Analysis | cryptoucan.xyz';
 
   // Transactions HTML — filter out zero-value non-meaningful txs
   const meaningfulTxs = data.transactions.filter(tx =>
