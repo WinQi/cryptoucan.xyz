@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Spot a Phishing Wallet Before It's Too Late | cryptoucan.xyz</title>
+<meta name="description" content="On-chain red flags that reveal scam addresses, drainer contracts, and phishing token activity. Learn the patterns that identify malicious wallets before you interact with them.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cryptoucan.xyz/blog/how-to-spot-phishing-wallet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Spot a Phishing Wallet Before It's Too Late">
+<meta property="og:description" content="On-chain red flags that reveal scam addresses, drainer contracts, and phishing token activity. Learn the patterns that identify malicious wallets before you interact with them.">
+<meta property="og:url" content="https://cryptoucan.xyz/blog/how-to-spot-phishing-wallet">
+<meta property="og:site_name" content="cryptoucan.xyz">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<style>
+  :root {
+    --bg:        #0a0f1e;
+    --bg2:       #0d1428;
+    --glass:     rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --grad1:     #4f8aff;
+    --grad2:     #a855f7;
+    --text:      #e8edf8;
+    --muted:     #cbd5e8;
+    --muted2:    #b0bfcf;
+    --green:     #34d399;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  .bg-orb {
+    position: fixed; border-radius: 50%;
+    filter: blur(120px); opacity: 0.08;
+    pointer-events: none; z-index: 0;
+    will-change: transform; transform: translateZ(0);
+  }
+  .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #4f8aff, transparent); top: -150px; left: -100px; }
+  .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent); top: 400px; right: -100px; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-text {
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-back {
+    font-family: var(--mono); font-size: 12px; color: var(--muted2);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--grad1); }
+
+  /* LAYOUT */
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ARTICLE HEADER */
+  .article-meta {
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .article-tag {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(79,138,255,0.1);
+    border: 1px solid rgba(79,138,255,0.2);
+    border-radius: 20px; padding: 2px 10px;
+    color: var(--grad1); font-size: 10px;
+  }
+  .article-title {
+    font-family: var(--sans); font-size: clamp(24px, 5vw, 36px);
+    font-weight: 600; line-height: 1.25;
+    color: var(--text); margin-bottom: 16px;
+  }
+  .article-subtitle {
+    font-size: 17px; color: var(--muted); font-weight: 300;
+    line-height: 1.7; margin-bottom: 32px;
+  }
+  .article-divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--grad1), var(--grad2), transparent);
+    margin-bottom: 40px; opacity: 0.3;
+  }
+
+  /* WALLET CARD */
+  .wallet-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 20px 24px;
+    margin: 32px 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .wallet-card-header {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .wallet-card-name {
+    font-family: var(--mono); font-size: 16px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .wallet-card-addr {
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    word-break: break-all;
+  }
+  .wallet-stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px; margin-top: 8px;
+  }
+  .wallet-stat { display: flex; flex-direction: column; gap: 2px; }
+  .wallet-stat-label { font-family: var(--mono); font-size: 10px; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em; }
+  .wallet-stat-value { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); }
+  .wallet-cta {
+    margin-top: 4px;
+    font-family: var(--mono); font-size: 11px;
+  }
+  .wallet-cta a {
+    color: var(--grad1); text-decoration: none;
+  }
+  .wallet-cta a:hover { text-decoration: underline; }
+  @media (max-width: 500px) { .wallet-stats { grid-template-columns: 1fr 1fr; } }
+
+  /* PROSE */
+  .prose { font-size: 16px; color: var(--muted); line-height: 1.85; }
+  .prose h2 {
+    font-family: var(--sans); font-size: 20px; font-weight: 600;
+    color: var(--text); margin: 40px 0 14px;
+  }
+  .prose h3 {
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em;
+    margin: 28px 0 10px;
+  }
+  .prose p { margin-bottom: 18px; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose a { color: var(--grad1); text-decoration: none; }
+  .prose a:hover { text-decoration: underline; }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: rgba(79,138,255,0.06);
+    border: 1px solid rgba(79,138,255,0.15);
+    border-left: 3px solid var(--grad1);
+    border-radius: 10px; padding: 16px 20px;
+    margin: 24px 0;
+    font-size: 15px; color: var(--muted); line-height: 1.75;
+  }
+  .highlight-box strong { color: var(--grad1); }
+
+  /* FACT TABLE */
+  .fact-table {
+    width: 100%; border-collapse: collapse;
+    margin: 24px 0; font-size: 14px;
+  }
+  .fact-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--glass-border);
+    vertical-align: top;
+  }
+  .fact-table td:first-child {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted2); text-transform: uppercase;
+    letter-spacing: 0.05em; white-space: nowrap; width: 140px;
+  }
+  .fact-table td:last-child { color: var(--text); }
+  .fact-table tr:last-child td { border-bottom: none; }
+
+  /* CTA BLOCK */
+  .cta-block {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 24px;
+    margin: 40px 0; text-align: center;
+  }
+  .cta-block p {
+    font-size: 15px; color: var(--muted); margin-bottom: 16px;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    border: none; border-radius: 12px; padding: 12px 28px;
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    color: #fff; text-decoration: none; cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* RELATED POSTS */
+  .related { margin-top: 56px; }
+  .related-title {
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
+  }
+  .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .related-card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 12px; padding: 16px;
+    text-decoration: none; transition: border-color 0.2s;
+  }
+  .related-card:hover { border-color: rgba(79,138,255,0.3); }
+  .related-card-tag { font-family: var(--mono); font-size: 10px; color: var(--muted2); margin-bottom: 6px; }
+  .related-card-title { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.4; }
+  @media (max-width: 500px) { .related-grid { grid-template-columns: 1fr; } }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 40px 24px;
+    border-top: 1px solid var(--glass-border);
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    line-height: 2; position: relative; z-index: 1;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--grad1); }
+</style>
+</head>
+<body>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<nav>
+  <a href="/" class="logo" style="display:flex;align-items:center;gap:8px;">
+    <img src="/images/favicon.png" style="width:24px;height:24px;object-fit:contain;" alt="cryptoucan logo">
+    <span class="logo-text">cryptoucan.xyz</span>
+  </a>
+  <a href="/blog" class="nav-back">← Blog</a>
+</nav>
+<div class="wrap">
+  <div class="article-meta">
+    <span class="article-tag">Security</span>
+    <span style="margin-top:6px;">March 22, 2026</span>
+    <span>7 min read</span>
+  </div>
+  <h1 class="article-title">How to Spot a Phishing Wallet Before It's Too Late</h1>
+  <p class="article-subtitle">The blockchain is transparent — and that transparency can protect you. Here are the on-chain red flags that reveal phishing wallets, drainer contracts, and scam tokens.</p>
+  <div class="article-divider"></div>
+  <div class="prose">
+    <h2>Why on-chain data helps catch scams</h2>
+    <p>One of the most powerful properties of public blockchains is that scam activity leaves a permanent, verifiable trail. Unlike traditional fraud — which often hides in private banking systems — crypto scams are executed on a public ledger. Every phishing transaction, every drainer contract, every spam token airdrop is recorded forever.</p>
+    <p>Learning to read these patterns gives you a significant advantage. Before interacting with any address, you can scan it and look for warning signs.</p>
+    <h2>Red flag 1 — Suspicious token names</h2>
+    <p>The most common form of on-chain phishing is the spam airdrop. Scammers send tokens with names like "claim-rewards.xyz", "visit-airdrop.io/claim", or "FREE ETH — go to [URL]" to thousands of wallets. The token itself is worthless — the goal is to get you to visit the URL and connect your wallet, at which point a drainer contract steals your funds.</p>
+    <p>On cryptoucan.xyz, we automatically filter out tokens whose names or symbols contain URLs, reward-related keywords, or suspicious patterns. If you see these tokens in a raw blockchain explorer and not in our tool, that's exactly why.</p>
+    <div class="highlight-box"><strong>Rule of thumb:</strong> If a token name contains a URL, a promise of free money, or words like "claim", "reward", "airdrop", or "visit" — do not interact with it. Do not click any links. Do not try to sell it. Some tokens trigger approval transactions that drain your wallet when you attempt to sell.</div>
+    <h2>Red flag 2 — Very new wallet with high transaction volume</h2>
+    <p>Phishing operations typically use fresh wallets to avoid being blacklisted. A wallet that was created days ago but has already processed hundreds of transactions is a major red flag. Legitimate high-volume wallets are almost always old — exchanges, protocols, and active traders have years of history.</p>
+    <h2>Red flag 3 — Unusual outflow patterns</h2>
+    <p>Wallet drainers work by getting victims to sign a malicious approval transaction. This gives the drainer contract permission to move all tokens from the victim's wallet. If you scan a suspected drainer wallet, you'll see a consistent pattern: funds arrive from many different addresses in small amounts, then large outflows to a consolidation wallet.</p>
+    <h2>Red flag 4 — Impersonation addresses</h2>
+    <p>Some scammers create addresses that look similar to legitimate ones — same first and last few characters. Always verify the full address, not just the abbreviated version. cryptoucan.xyz displays the full address prominently so you can verify it.</p>
+    <h2>What to do if you've interacted with a scam</h2>
+    <p>Immediately revoke any token approvals you've granted using a tool like revoke.cash. Move any remaining assets to a new wallet. Do not interact further with the suspicious address. Report the address to the Ethereum community via platforms like Etherscan's comment system.</p>
+  </div>
+  <div class="cta-block">
+    <p>Scan any suspicious address before interacting — see its full history in plain English.</p>
+    <a href="/" class="btn-primary">Scan an Address →</a>
+  </div>
+  <div class="related"><div class="related-title">More from the blog</div><div class="related-grid">
+    <a href="/blog/red-flags-on-chain-data" class="related-card"><div class="related-card-tag">Security</div><div class="related-card-title">Red flags in on-chain data — scam patterns to know</div></a>
+    <a href="/blog/why-never-share-private-key" class="related-card"><div class="related-card-tag">Security</div><div class="related-card-title">Why you should never share your private key</div></a>
+  </div></div>
+</div>
+<footer>
+  <p>
+    <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
+    <a href="/" style="font-family:var(--mono);background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;font-weight:700;">cryptoucan.xyz</a>
+  </p>
+  <p style="margin-top:12px;margin-bottom:12px;">Every wallet has a story.</p>
+  <p>
+    <a href="/about">About</a> &nbsp;·&nbsp;
+    <a href="/blog">Blog</a> &nbsp;·&nbsp;
+    <a href="/privacy">Privacy</a> &nbsp;·&nbsp;
+    <a href="/terms">Terms</a>
+  </p>
+  <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+    <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span>
+    </a>
+  </div>
+</footer>
+</body>
+</html>

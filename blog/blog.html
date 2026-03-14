@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Ethereum Wallet Guides & Analysis | cryptoucan.xyz</title>
+<meta name="description" content="Guides, deep dives, and wallet analysis from cryptoucan.xyz. Learn how to read Ethereum wallets, understand on-chain data, and spot crypto whales.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cryptoucan.xyz/blog">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<style>
+  :root {
+    --bg: #0a0f1e; --bg2: #0d1428;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-hover: rgba(255,255,255,0.07);
+    --grad1: #4f8aff; --grad2: #a855f7;
+    --text: #e8edf8; --muted: #cbd5e8; --muted2: #b0bfcf;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; min-height: 100vh; }
+
+  .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.08; pointer-events: none; z-index: 0; will-change: transform; transform: translateZ(0); }
+  .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #4f8aff, transparent); top: -150px; left: -100px; }
+  .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent); top: 300px; right: -100px; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    background: rgba(10,15,30,0.85); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-text { font-family: var(--mono); font-size: 14px; font-weight: 700; background: linear-gradient(135deg, var(--grad1), var(--grad2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .nav-back { font-family: var(--mono); font-size: 12px; color: var(--muted2); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--grad1); }
+
+  .wrap { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .page-eyebrow { font-family: var(--mono); font-size: 11px; color: var(--muted2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+  .page-title { font-size: clamp(28px, 5vw, 40px); font-weight: 600; color: var(--text); margin-bottom: 12px; }
+  .page-sub { font-size: 16px; color: var(--muted); font-weight: 300; margin-bottom: 40px; }
+  .divider { height: 1px; background: linear-gradient(90deg, var(--grad1), var(--grad2), transparent); opacity: 0.2; margin-bottom: 40px; }
+
+  /* FEATURED POST */
+  .featured-post {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 28px;
+    text-decoration: none; display: block;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 32px;
+  }
+  .featured-post:hover { border-color: rgba(79,138,255,0.3); background: var(--glass-hover); }
+  .featured-label { font-family: var(--mono); font-size: 10px; color: var(--grad1); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .featured-title { font-size: 22px; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 10px; }
+  .featured-excerpt { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+  .featured-meta { font-family: var(--mono); font-size: 11px; color: var(--muted2); display: flex; gap: 16px; flex-wrap: wrap; }
+  .post-tag { background: rgba(79,138,255,0.08); border: 1px solid rgba(79,138,255,0.15); border-radius: 20px; padding: 2px 10px; color: var(--grad1); }
+
+  /* POST GRID */
+  .section-label { font-family: var(--mono); font-size: 11px; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+  .posts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .post-card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 14px; padding: 20px;
+    text-decoration: none; display: flex; flex-direction: column; gap: 8px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .post-card:hover { border-color: rgba(79,138,255,0.3); background: var(--glass-hover); }
+  .post-card-tag { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
+  .post-card-title { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .post-card-excerpt { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .post-card-meta { font-family: var(--mono); font-size: 10px; color: var(--muted2); margin-top: auto; padding-top: 8px; }
+  .coming-soon { opacity: 0.4; cursor: default; pointer-events: none; }
+  .coming-soon .post-card-tag::after { content: ' · Coming soon'; }
+  @media (max-width: 560px) { .posts-grid { grid-template-columns: 1fr; } }
+
+  footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--glass-border); font-family: var(--mono); font-size: 11px; color: var(--muted2); line-height: 2; position: relative; z-index: 1; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--grad1); }
+</style>
+</head>
+<body>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+
+<nav>
+  <a href="/" class="logo" style="display:flex;align-items:center;gap:8px;">
+    <img src="/images/favicon.png" style="width:24px;height:24px;object-fit:contain;" alt="cryptoucan logo">
+    <span class="logo-text">cryptoucan.xyz</span>
+  </a>
+  <a href="/" class="nav-back">← Home</a>
+</nav>
+
+<div class="wrap">
+  <div class="page-eyebrow">Blog</div>
+  <h1 class="page-title">Guides & Wallet Analysis</h1>
+  <p class="page-sub">On-chain data explained in plain English. Wallet deep dives, beginner guides, and everything you need to read the Ethereum blockchain.</p>
+  <div class="divider"></div>
+
+  <!-- FEATURED -->
+  <a href="/blog/vitalik-eth-wallet-analysis" class="featured-post">
+    <div class="featured-label">⭐ Featured · Wallet Analysis</div>
+    <div class="featured-title">Vitalik.eth — The Most Watched Address on Ethereum</div>
+    <div class="featured-excerpt">Behind every wallet address is a story. Vitalik Buterin's is one of the most transparent, charitable, and closely followed in crypto. Here's what the blockchain actually shows.</div>
+    <div class="featured-meta">
+      <span>March 2026</span>
+      <span>8 min read</span>
+      <span class="post-tag">Wallet Analysis</span>
+    </div>
+  </a>
+
+  <!-- MORE POSTS -->
+  <div class="section-label">More articles</div>
+  <div class="posts-grid">
+
+    <a href="/blog/binance-cold-wallet-analysis" class="post-card">
+      <div class="post-card-tag">Wallet Analysis</div>
+      <div class="post-card-title">Inside Binance's Cold Wallet — What $4B+ Looks Like On-Chain</div>
+      <div class="post-card-excerpt">The largest exchange cold wallet on Ethereum. What the data shows about how Binance manages its ETH reserves.</div>
+      <div class="post-card-meta">March 15, 2026 · 7 min read</div>
+    </a>
+
+    <a href="/blog/eth2-deposit-contract-explained" class="post-card">
+      <div class="post-card-tag">Wallet Analysis</div>
+      <div class="post-card-title">The ETH 2.0 Deposit Contract — 40 Million ETH and Counting</div>
+      <div class="post-card-excerpt">One address. Over 40 million ETH staked. The backbone of Ethereum's proof-of-stake network, explained.</div>
+      <div class="post-card-meta">March 16, 2026 · 6 min read</div>
+    </a>
+
+    <a href="/blog/coinbase-hot-wallet-analysis" class="post-card">
+      <div class="post-card-tag">Wallet Analysis</div>
+      <div class="post-card-title">Coinbase Hot Wallet — What $10B in Daily Flow Looks Like On-Chain</div>
+      <div class="post-card-excerpt">Every Coinbase withdrawal flows through this address. Here's what billions in daily volume looks like on-chain.</div>
+      <div class="post-card-meta">March 17, 2026 · 6 min read</div>
+    </a>
+
+    <a href="/blog/what-is-a-crypto-whale" class="post-card">
+      <div class="post-card-tag">Education</div>
+      <div class="post-card-title">What is a Crypto Whale — and How Do You Spot One?</div>
+      <div class="post-card-excerpt">The wallets that move markets. What defines a whale, how to find them, and what their on-chain behaviour reveals.</div>
+      <div class="post-card-meta">March 18, 2026 · 7 min read</div>
+    </a>
+
+    <a href="/blog/how-to-analyze-ethereum-wallet" class="post-card">
+      <div class="post-card-tag">Guide</div>
+      <div class="post-card-title">How to Analyze Any Ethereum Wallet in 60 Seconds</div>
+      <div class="post-card-excerpt">A step-by-step guide to reading wallet data — balance, age, activity, and transactions — without any technical knowledge.</div>
+      <div class="post-card-meta">March 19, 2026 · 6 min read</div>
+    </a>
+
+    <a href="/blog/what-is-ens-name" class="post-card">
+      <div class="post-card-tag">Education</div>
+      <div class="post-card-title">What is an ENS Name — and Why Does vitalik.eth Matter?</div>
+      <div class="post-card-excerpt">How the Ethereum Name Service turns complex addresses into human-readable names like vitalik.eth.</div>
+      <div class="post-card-meta">March 20, 2026 · 5 min read</div>
+    </a>
+
+    <a href="/blog/eth-balance-vs-token-holdings" class="post-card">
+      <div class="post-card-tag">Education</div>
+      <div class="post-card-title">ETH Balance vs Token Holdings — What's the Difference?</div>
+      <div class="post-card-excerpt">Understanding the difference between ETH and ERC-20 tokens is the first step to reading on-chain data properly.</div>
+      <div class="post-card-meta">March 21, 2026 · 5 min read</div>
+    </a>
+
+    <a href="/blog/how-to-spot-phishing-wallet" class="post-card">
+      <div class="post-card-tag">Security</div>
+      <div class="post-card-title">How to Spot a Phishing Wallet Before It's Too Late</div>
+      <div class="post-card-excerpt">On-chain red flags that reveal scam addresses, drainer contracts, and phishing token activity.</div>
+      <div class="post-card-meta">March 22, 2026 · 7 min read</div>
+    </a>
+
+    <a href="/blog/red-flags-on-chain-data" class="post-card">
+      <div class="post-card-tag">Security</div>
+      <div class="post-card-title">Red Flags in On-Chain Data — Scam Patterns to Know</div>
+      <div class="post-card-excerpt">Rug pulls, honeypots, wash trading — the most common on-chain scam patterns and how to identify them.</div>
+      <div class="post-card-meta">March 23, 2026 · 7 min read</div>
+    </a>
+
+    <a href="/blog/why-never-share-private-key" class="post-card">
+      <div class="post-card-tag">Security</div>
+      <div class="post-card-title">Why You Should Never Share Your Private Key — Ever</div>
+      <div class="post-card-excerpt">Your private key is the only thing between your crypto and permanent loss. Here's what happens if you share it.</div>
+      <div class="post-card-meta">March 24, 2026 · 5 min read</div>
+    </a>
+
+    <a href="/blog/uniswap-transactions-on-chain" class="post-card">
+      <div class="post-card-tag">DeFi</div>
+      <div class="post-card-title">What Uniswap Transactions Look Like On-Chain</div>
+      <div class="post-card-excerpt">Millions of token swaps happen on Uniswap every day. Here's what they actually look like on the Ethereum blockchain.</div>
+      <div class="post-card-meta">March 25, 2026 · 6 min read</div>
+    </a>
+
+    <a href="/blog/defi-power-user-wallet" class="post-card">
+      <div class="post-card-tag">DeFi</div>
+      <div class="post-card-title">How to Tell if a Wallet is a DeFi Power User</div>
+      <div class="post-card-excerpt">DeFi power users leave a distinctive on-chain footprint. Here are the signals that identify serious DeFi participants.</div>
+      <div class="post-card-meta">March 26, 2026 · 6 min read</div>
+    </a>
+
+    <a href="/blog/ai-analyze-ethereum-wallet" class="post-card">
+      <div class="post-card-tag">AI + Crypto</div>
+      <div class="post-card-title">How to Use AI to Analyze Your Ethereum Wallet</div>
+      <div class="post-card-excerpt">How to combine cryptoucan.xyz with ChatGPT, Claude, or Gemini for a deeper, personalised wallet analysis.</div>
+      <div class="post-card-meta">March 27, 2026 · 6 min read</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <p>
+    <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
+    <a href="/" style="font-family:var(--mono);background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;font-weight:700;">cryptoucan.xyz</a>
+  </p>
+  <p style="margin-top:12px;margin-bottom:12px;">Every wallet has a story.</p>
+  <p>
+    <a href="/about">About</a> &nbsp;·&nbsp;
+    <a href="/blog">Blog</a> &nbsp;·&nbsp;
+    <a href="/privacy">Privacy</a> &nbsp;·&nbsp;
+    <a href="/terms">Terms</a>
+  </p>
+  <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+    <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span>
+    </a>
+  </div>
+</footer>
+
+</body>
+</html>
