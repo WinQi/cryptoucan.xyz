@@ -1,3 +1,19 @@
+# cryptoucan.xyz robots.txt
+
+# Allow all search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Allow all other crawlers by default
 User-agent: *
 Allow: /
 
