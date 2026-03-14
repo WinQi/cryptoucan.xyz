@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Analysis Prompt — One Click, Deeper Insights | cryptoucan.xyz</title>
+<meta name="description" content="The AI Analysis Prompt on cryptoucan.xyz pre-fills all key wallet data into a ready-to-use prompt for ChatGPT, Claude, or Gemini. Learn how it works and how to get the most from it.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cryptoucan.xyz/blog/ai-analysis-prompt-explained">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Analysis Prompt — One Click, Deeper Insights">
+<meta property="og:description" content="The AI Analysis Prompt on cryptoucan.xyz pre-fills all key wallet data into a ready-to-use prompt for ChatGPT, Claude, or Gemini. Learn how it works and how to get the most from it.">
+<meta property="og:url" content="https://cryptoucan.xyz/blog/ai-analysis-prompt-explained">
+<meta property="og:site_name" content="cryptoucan.xyz">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link id="favicon" rel="shortcut icon" href="/images/favicon_32.png" type="/image/png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<style>
+  :root {
+    --bg:        #0a0f1e;
+    --bg2:       #0d1428;
+    --glass:     rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --grad1:     #4f8aff;
+    --grad2:     #a855f7;
+    --text:      #e8edf8;
+    --muted:     #cbd5e8;
+    --muted2:    #b0bfcf;
+    --green:     #34d399;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  .bg-orb {
+    position: fixed; border-radius: 50%;
+    filter: blur(120px); opacity: 0.08;
+    pointer-events: none; z-index: 0;
+    will-change: transform; transform: translateZ(0);
+  }
+  .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #4f8aff, transparent); top: -150px; left: -100px; }
+  .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent); top: 400px; right: -100px; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-text {
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-back {
+    font-family: var(--mono); font-size: 12px; color: var(--muted2);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--grad1); }
+
+  /* LAYOUT */
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ARTICLE HEADER */
+  .article-meta {
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .article-tag {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(79,138,255,0.1);
+    border: 1px solid rgba(79,138,255,0.2);
+    border-radius: 20px; padding: 2px 10px;
+    color: var(--grad1); font-size: 10px;
+  }
+  .article-title {
+    font-family: var(--sans); font-size: clamp(24px, 5vw, 36px);
+    font-weight: 600; line-height: 1.25;
+    color: var(--text); margin-bottom: 16px;
+  }
+  .article-subtitle {
+    font-size: 17px; color: var(--muted); font-weight: 300;
+    line-height: 1.7; margin-bottom: 32px;
+  }
+  .article-divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--grad1), var(--grad2), transparent);
+    margin-bottom: 40px; opacity: 0.3;
+  }
+
+  /* WALLET CARD */
+  .wallet-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 20px 24px;
+    margin: 32px 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .wallet-card-header {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .wallet-card-name {
+    font-family: var(--mono); font-size: 16px; font-weight: 700;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .wallet-card-addr {
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    word-break: break-all;
+  }
+  .wallet-stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px; margin-top: 8px;
+  }
+  .wallet-stat { display: flex; flex-direction: column; gap: 2px; }
+  .wallet-stat-label { font-family: var(--mono); font-size: 10px; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em; }
+  .wallet-stat-value { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); }
+  .wallet-cta {
+    margin-top: 4px;
+    font-family: var(--mono); font-size: 11px;
+  }
+  .wallet-cta a {
+    color: var(--grad1); text-decoration: none;
+  }
+  .wallet-cta a:hover { text-decoration: underline; }
+  @media (max-width: 500px) { .wallet-stats { grid-template-columns: 1fr 1fr; } }
+
+  /* PROSE */
+  .prose { font-size: 16px; color: var(--muted); line-height: 1.85; }
+  .prose h2 {
+    font-family: var(--sans); font-size: 20px; font-weight: 600;
+    color: var(--text); margin: 40px 0 14px;
+  }
+  .prose h3 {
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em;
+    margin: 28px 0 10px;
+  }
+  .prose p { margin-bottom: 18px; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--text); font-weight: 500; }
+  .prose a { color: var(--grad1); text-decoration: none; }
+  .prose a:hover { text-decoration: underline; }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: rgba(79,138,255,0.06);
+    border: 1px solid rgba(79,138,255,0.15);
+    border-left: 3px solid var(--grad1);
+    border-radius: 10px; padding: 16px 20px;
+    margin: 24px 0;
+    font-size: 15px; color: var(--muted); line-height: 1.75;
+  }
+  .highlight-box strong { color: var(--grad1); }
+
+  /* FACT TABLE */
+  .fact-table {
+    width: 100%; border-collapse: collapse;
+    margin: 24px 0; font-size: 14px;
+  }
+  .fact-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--glass-border);
+    vertical-align: top;
+  }
+  .fact-table td:first-child {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted2); text-transform: uppercase;
+    letter-spacing: 0.05em; white-space: nowrap; width: 140px;
+  }
+  .fact-table td:last-child { color: var(--text); }
+  .fact-table tr:last-child td { border-bottom: none; }
+
+  /* CTA BLOCK */
+  .cta-block {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 24px;
+    margin: 40px 0; text-align: center;
+  }
+  .cta-block p {
+    font-size: 15px; color: var(--muted); margin-bottom: 16px;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2));
+    border: none; border-radius: 12px; padding: 12px 28px;
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    color: #fff; text-decoration: none; cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* RELATED POSTS */
+  .related { margin-top: 56px; }
+  .related-title {
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
+  }
+  .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .related-card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 12px; padding: 16px;
+    text-decoration: none; transition: border-color 0.2s;
+  }
+  .related-card:hover { border-color: rgba(79,138,255,0.3); }
+  .related-card-tag { font-family: var(--mono); font-size: 10px; color: var(--muted2); margin-bottom: 6px; }
+  .related-card-title { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.4; }
+  @media (max-width: 500px) { .related-grid { grid-template-columns: 1fr; } }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 40px 24px;
+    border-top: 1px solid var(--glass-border);
+    font-family: var(--mono); font-size: 11px; color: var(--muted2);
+    line-height: 2; position: relative; z-index: 1;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--grad1); }
+</style>
+</head>
+<body>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<nav>
+  <a href="/" class="logo" style="display:flex;align-items:center;gap:8px;">
+    <img src="/images/favicon.png" style="width:24px;height:24px;object-fit:contain;" alt="cryptoucan logo">
+    <span class="logo-text">cryptoucan.xyz</span>
+  </a>
+  <a href="/blog" class="nav-back">← Blog</a>
+</nav>
+<div class="wrap">
+  <div class="article-meta">
+    <span class="article-tag" style="color:#f472b6;border-color:#f472b633;background:#f472b611;">Feature</span>
+    <span style="margin-top:6px;">March 18, 2026</span>
+    <span>4 min read</span>
+  </div>
+  <h1 class="article-title">AI Analysis Prompt — One Click, Deeper Insights</h1>
+  <p class="article-subtitle">Every wallet page includes a ready-made AI prompt. Copy it, paste it into any AI assistant, and get a deeper analysis in seconds.</p>
+  <div class="article-divider"></div>
+  <div class="prose">
+    <h2>What is the AI Analysis Prompt?</h2>
+    <p>At the bottom of every wallet analysis page on cryptoucan.xyz, you'll find the AI Analysis Prompt — a pre-filled block of text containing the wallet's key data, formatted specifically for use with AI assistants like ChatGPT, Claude, and Gemini.</p>
+    <p>Instead of copying data manually and figuring out how to ask the right question, the prompt does the work for you. One click copies everything to your clipboard, ready to paste into any AI chat.</p>
+
+    <h2>What the prompt contains</h2>
+    <p>The prompt includes the wallet address and ENS name (if available), total ETH value in USD, ETH balance, wallet age and the date of the first transaction, last active date, total transaction count, token holdings, activity status, and the eight most recent notable transactions in plain English. It then asks the AI to analyse the wallet type, activity patterns, notable observations, and any risks — all in simple non-technical language.</p>
+
+    <h2>How to use it</h2>
+    <p>Scan any wallet on cryptoucan.xyz. Scroll to the AI Analysis Prompt section near the bottom of the page. The prompt is pre-filled and editable — you can add your own context before copying. Click "Copy & Ask AI". Open ChatGPT, Claude, or Gemini. Paste and send. The AI will respond with a personalised analysis of the wallet.</p>
+    <div class="highlight-box"><strong>Pro tip:</strong> Add context to the prompt before copying. For example: "This is a wallet that just sent me payment — I want to verify it looks legitimate" or "I'm researching this wallet for due diligence purposes." The AI will tailor its response accordingly.</div>
+
+    <h2>Why this is useful</h2>
+    <p>AI assistants are exceptionally good at pattern recognition and plain-English explanation. Given structured wallet data, they can identify behaviour patterns (long-term holder vs active trader vs DeFi power user), flag unusual activity, explain what specific transaction types mean, and give you a narrative summary that connects all the data points.</p>
+    <p>cryptoucan.xyz provides the data. The AI provides the interpretation. Together, they give you a more complete picture than either could alone.</p>
+  </div>
+  <div class="cta-block">
+    <p>Generate an AI-ready wallet analysis in seconds — copy and paste into any AI.</p>
+    <a href="/" class="btn-primary">Try It Now →</a>
+  </div>
+  <div class="related"><div class="related-title">More features</div><div class="related-grid">
+    <a href="/blog/share-wallet-page-explained" class="related-card"><div class="related-card-tag" style="color:#f472b6;">Feature</div><div class="related-card-title">Share This Page — Permanent Wallet URLs</div></a>
+    <a href="/blog/notable-transactions-explained" class="related-card"><div class="related-card-tag" style="color:#f472b6;">Feature</div><div class="related-card-title">Notable Transactions — Blockchain Activity in Plain English</div></a>
+  </div></div>
+</div>
+<footer>
+  <p>
+    <a href="/"><img src="/images/favicon.png" style="display:block;margin:0 auto;width:36px;height:36px;object-fit:contain;opacity:0.9;" alt="cryptoucan logo"></a>
+    <a href="/" style="font-family:var(--mono);background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;font-weight:700;">cryptoucan.xyz</a>
+  </p>
+  <p style="margin-top:12px;margin-bottom:12px;">Every wallet has a story.</p>
+  <p>
+    <a href="/about">About</a> &nbsp;·&nbsp;
+    <a href="/blog">Blog</a> &nbsp;·&nbsp;
+      <a href="/blog#features">Features</a> &nbsp;·&nbsp;
+    <a href="/privacy">Privacy</a> &nbsp;·&nbsp;
+    <a href="/terms">Terms</a>
+  </p>
+  <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+    <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcryptoucan.xyz" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <img src="https://developers.google.com/static/safe-browsing/images/SafeBrowsing_Icon.png" alt="Google Safe Browsing" style="width:18px;height:18px;opacity:0.7;">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Verified by Google Safe Browsing</span>
+    </a>
+  </div>
+</footer>
+</body>
+</html>

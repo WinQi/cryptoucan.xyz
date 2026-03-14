@@ -436,7 +436,10 @@ function showLoading(address) {
     </div>
     <div class="section">
       <div class="card">
-        <div class="card-title">📊 Wallet Snapshot</div>
+        <div class="card-title" style="justify-content:space-between;">
+          <span>📊 Wallet Snapshot</span>
+          <a href="/blog/wallet-snapshot-explained" target="_blank" style="font-family:var(--mono);font-size:10px;color:var(--muted2);text-decoration:none;font-weight:400;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">Learn more →</a>
+        </div>
         <div class="snap-grid">
           ${['Total Value','Wallet Age','Last Active','Transactions'].map(l => `
           <div class="snap-item">
@@ -570,7 +573,10 @@ function render(data) {
 
     <div class="section">
       <div class="card">
-        <div class="card-title">📊 Wallet Snapshot</div>
+        <div class="card-title" style="justify-content:space-between;">
+          <span>📊 Wallet Snapshot</span>
+          <a href="/blog/wallet-snapshot-explained" target="_blank" style="font-family:var(--mono);font-size:10px;color:var(--muted2);text-decoration:none;font-weight:400;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">Learn more →</a>
+        </div>
         <div class="snap-grid">
           <div class="snap-item">
             <div class="snap-label">Total Value</div>

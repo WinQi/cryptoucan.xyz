@@ -601,6 +601,23 @@
   .fade-section:nth-child(1) { animation-delay: 0.1s; }
   .fade-section:nth-child(2) { animation-delay: 0.2s; }
   .fade-section:nth-child(3) { animation-delay: 0.3s; }
+  .blog-card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 14px; padding: 18px;
+    text-decoration: none; display: flex; flex-direction: column; gap: 6px;
+    transition: border-color 0.2s;
+  }
+  .blog-card:hover { border-color: rgba(79,138,255,0.3); }
+  .blog-card-tag { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .blog-card-title { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.5; flex: 1; }
+  .blog-card-meta { font-family: var(--mono); font-size: 10px; color: var(--muted2); margin-top: 4px; }
+  .blog-card-read { font-family: var(--mono); font-size: 11px; color: var(--grad1); }
+  @media (max-width: 600px) {
+    #panel-blog > div, #panel-features > div { grid-template-columns: 1fr 1fr !important; }
+  }
+  @media (max-width: 400px) {
+    #panel-blog > div, #panel-features > div { grid-template-columns: 1fr !important; }
+  }
 </style>
 </head>
 <body>
@@ -777,35 +794,125 @@
 
   <div class="divider"></div>
 
-  <!-- BLOG -->
+  <!-- BLOG + FEATURES TABS -->
   <div class="fade-section">
-    <div class="section-label">From the blog</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;">
-      <a href="/blog/vitalik-eth-wallet-analysis" style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:18px;text-decoration:none;display:flex;flex-direction:column;gap:6px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(79,138,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--grad1);">Wallet Analysis</div>
-        <div style="font-size:14px;font-weight:500;color:var(--text);line-height:1.4;">Vitalik.eth — The Most Watched Address on Ethereum</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--muted2);margin-top:auto;padding-top:6px;">Mar 14, 2026 · 8 min read</div>
-      </a>
-      <a href="/blog/binance-cold-wallet-analysis" style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:18px;text-decoration:none;display:flex;flex-direction:column;gap:6px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(79,138,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--grad1);">Wallet Analysis</div>
-        <div style="font-size:14px;font-weight:500;color:var(--text);line-height:1.4;">Inside Binance's Cold Wallet — What $4B+ Looks Like On-Chain</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--muted2);margin-top:auto;padding-top:6px;">Mar 15, 2026 · 7 min read</div>
-      </a>
-      <a href="/blog/what-is-a-crypto-whale" style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:18px;text-decoration:none;display:flex;flex-direction:column;gap:6px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(79,138,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'">
-        <div style="font-family:var(--mono);font-size:10px;color:#22d3ee;">Education</div>
-        <div style="font-size:14px;font-weight:500;color:var(--text);line-height:1.4;">What is a Crypto Whale — and How Do You Spot One?</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--muted2);margin-top:auto;padding-top:6px;">Mar 18, 2026 · 7 min read</div>
-      </a>
-      <a href="/blog/how-to-spot-phishing-wallet" style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:18px;text-decoration:none;display:flex;flex-direction:column;gap:6px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(79,138,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'">
-        <div style="font-family:var(--mono);font-size:10px;color:#fbbf24;">Security</div>
-        <div style="font-size:14px;font-weight:500;color:var(--text);line-height:1.4;">How to Spot a Phishing Wallet Before It's Too Late</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--muted2);margin-top:auto;padding-top:6px;">Mar 22, 2026 · 7 min read</div>
-      </a>
+    <div class="section-label">Learn & explore</div>
+
+    <!-- Tab buttons -->
+    <div style="display:flex;gap:8px;margin-bottom:20px;justify-content:center;">
+      <button id="tab-blog" onclick="switchTab('blog')" style="font-family:var(--mono);font-size:12px;padding:7px 18px;border-radius:20px;border:1px solid var(--glass-border);cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,var(--grad1),var(--grad2));color:#fff;border-color:transparent;">Blog</button>
+      <button id="tab-features" onclick="switchTab('features')" style="font-family:var(--mono);font-size:12px;padding:7px 18px;border-radius:20px;border:1px solid var(--glass-border);cursor:pointer;transition:all 0.2s;background:transparent;color:var(--muted2);">Features</button>
     </div>
-    <div style="text-align:center;margin-top:20px;">
-      <a href="/blog" style="font-family:var(--mono);font-size:12px;color:var(--muted2);text-decoration:none;border:1px solid var(--glass-border);border-radius:8px;padding:8px 20px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(79,138,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'">View all articles →</a>
+
+    <!-- Blog tab -->
+    <div id="panel-blog">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+        <a href="/blog/vitalik-eth-wallet-analysis" class="blog-card">
+          <div class="blog-card-tag" style="color:var(--grad1);">Wallet Analysis</div>
+          <div class="blog-card-title">Vitalik.eth — The Most Watched Address on Ethereum</div>
+          <div class="blog-card-meta">Mar 14 · 8 min</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/binance-cold-wallet-analysis" class="blog-card">
+          <div class="blog-card-tag" style="color:var(--grad1);">Wallet Analysis</div>
+          <div class="blog-card-title">Inside Binance's Cold Wallet — What $4B+ Looks Like On-Chain</div>
+          <div class="blog-card-meta">Mar 15 · 7 min</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/what-is-a-crypto-whale" class="blog-card">
+          <div class="blog-card-tag" style="color:#22d3ee;">Education</div>
+          <div class="blog-card-title">What is a Crypto Whale — and How Do You Spot One?</div>
+          <div class="blog-card-meta">Mar 18 · 7 min</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/how-to-spot-phishing-wallet" class="blog-card">
+          <div class="blog-card-tag" style="color:#fbbf24;">Security</div>
+          <div class="blog-card-title">How to Spot a Phishing Wallet Before It's Too Late</div>
+          <div class="blog-card-meta">Mar 22 · 7 min</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/uniswap-transactions-on-chain" class="blog-card">
+          <div class="blog-card-tag" style="color:#34d399;">DeFi</div>
+          <div class="blog-card-title">What Uniswap Transactions Look Like On-Chain</div>
+          <div class="blog-card-meta">Mar 25 · 6 min</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/ai-analyze-ethereum-wallet" class="blog-card">
+          <div class="blog-card-tag" style="color:#fb923c;">AI + Crypto</div>
+          <div class="blog-card-title">How to Use AI to Analyze Your Ethereum Wallet</div>
+          <div class="blog-card-meta">Mar 27 · 6 min</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+      </div>
+      <div style="text-align:center;margin-top:20px;">
+        <a href="/blog" style="font-family:var(--mono);font-size:12px;color:var(--muted2);text-decoration:none;border:1px solid var(--glass-border);border-radius:8px;padding:8px 20px;">View all articles →</a>
+      </div>
+    </div>
+
+    <!-- Features tab -->
+    <div id="panel-features" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+        <a href="/blog/wallet-snapshot-explained" class="blog-card">
+          <div class="blog-card-tag" style="color:#f472b6;">Feature</div>
+          <div class="blog-card-title">Wallet Snapshot — What Each Card Tells You</div>
+          <div class="blog-card-meta">6 min read</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/asset-breakdown-explained" class="blog-card">
+          <div class="blog-card-tag" style="color:#f472b6;">Feature</div>
+          <div class="blog-card-title">Asset Breakdown — ETH and Token Holdings Explained</div>
+          <div class="blog-card-meta">4 min read</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/notable-transactions-explained" class="blog-card">
+          <div class="blog-card-tag" style="color:#f472b6;">Feature</div>
+          <div class="blog-card-title">Notable Transactions — Blockchain Activity in Plain English</div>
+          <div class="blog-card-meta">4 min read</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/ai-analysis-prompt-explained" class="blog-card">
+          <div class="blog-card-tag" style="color:#f472b6;">Feature</div>
+          <div class="blog-card-title">AI Analysis Prompt — One Click, Deeper Insights</div>
+          <div class="blog-card-meta">4 min read</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/share-wallet-page-explained" class="blog-card">
+          <div class="blog-card-tag" style="color:#f472b6;">Feature</div>
+          <div class="blog-card-title">Share This Page — Permanent Wallet URLs</div>
+          <div class="blog-card-meta">3 min read</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+        <a href="/blog/how-to-read-your-wallet" class="blog-card">
+          <div class="blog-card-tag" style="color:#f472b6;">Feature</div>
+          <div class="blog-card-title">How to Read Your Ethereum Wallet — A Complete Guide</div>
+          <div class="blog-card-meta">7 min read</div>
+          <div class="blog-card-read">Read more →</div>
+        </a>
+      </div>
     </div>
   </div>
+
+  <script>
+  function switchTab(tab) {
+    const blogPanel = document.getElementById('panel-blog');
+    const featPanel = document.getElementById('panel-features');
+    const blogBtn = document.getElementById('tab-blog');
+    const featBtn = document.getElementById('tab-features');
+    const active = 'background:linear-gradient(135deg,var(--grad1),var(--grad2));color:#fff;border-color:transparent;';
+    const inactive = 'background:transparent;color:var(--muted2);';
+    if (tab === 'blog') {
+      blogPanel.style.display = 'block';
+      featPanel.style.display = 'none';
+      blogBtn.style.cssText += active;
+      featBtn.style.cssText = featBtn.style.cssText.replace(/background:[^;]+;color:[^;]+;/g, '') + inactive;
+    } else {
+      blogPanel.style.display = 'none';
+      featPanel.style.display = 'block';
+      featBtn.style.cssText += active;
+      blogBtn.style.cssText = blogBtn.style.cssText.replace(/background:[^;]+;color:[^;]+;/g, '') + inactive;
+    }
+  }
+  </script>
 
   <div class="divider"></div>
 
