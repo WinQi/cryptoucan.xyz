@@ -436,10 +436,10 @@ function showLoading(address) {
     </div>
     <div class="section">
       <div class="card">
-        <div class="card-title" style="justify-content:space-between;">
+        <a href="/blog/wallet-snapshot-explained" target="_blank" class="card-title" style="justify-content:space-between;text-decoration:none;cursor:pointer;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
           <span>📊 Wallet Snapshot</span>
-          <a href="/blog/wallet-snapshot-explained" target="_blank" style="font-family:var(--mono);font-size:12px;color:var(--muted2);text-decoration:none;font-weight:400;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">→</a>
-        </div>
+          <span style="font-size:12px;color:var(--muted2);">→</span>
+        </a>
         <div class="snap-grid">
           ${['Total Value','Wallet Age','Last Active','Transactions'].map(l => `
           <div class="snap-item">
@@ -573,10 +573,10 @@ function render(data) {
 
     <div class="section">
       <div class="card">
-        <div class="card-title" style="justify-content:space-between;">
+        <a href="/blog/wallet-snapshot-explained" target="_blank" class="card-title" style="justify-content:space-between;text-decoration:none;cursor:pointer;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
           <span>📊 Wallet Snapshot</span>
-          <a href="/blog/wallet-snapshot-explained" target="_blank" style="font-family:var(--mono);font-size:12px;color:var(--muted2);text-decoration:none;font-weight:400;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">→</a>
-        </div>
+          <span style="font-size:12px;color:var(--muted2);">→</span>
+        </a>
         <div class="snap-grid">
           <div class="snap-item">
             <div class="snap-label">Total Value</div>
@@ -638,10 +638,10 @@ function render(data) {
     <!-- AI PROMPT -->
     <div class="section">
       <div class="card">
-        <div class="card-title" style="justify-content:space-between;">
+        <a href="/blog/ai-analysis-prompt-explained" target="_blank" class="card-title" style="justify-content:space-between;text-decoration:none;cursor:pointer;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
           <span>📋 AI Analysis Prompt</span>
-          <a href="/blog/ai-analysis-prompt-explained" target="_blank" style="font-family:var(--mono);font-size:12px;color:var(--muted2);text-decoration:none;font-weight:400;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">→</a>
-        </div>
+          <span style="font-size:12px;color:var(--muted2);">→</span>
+        </a>
         <div id="promptBox" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:12px;padding:14px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7;outline:none;margin-bottom:12px;white-space:pre-wrap;word-break:break-word;user-select:text;" contenteditable="true" spellcheck="false"></div>
         <p style="font-size:12px;color:var(--muted2);line-height:1.6;font-weight:300;font-family:var(--mono);margin-bottom:10px;">
           Drop this into ChatGPT, Claude, or Gemini.
