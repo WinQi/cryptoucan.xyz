@@ -192,26 +192,22 @@
   @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
 
   /* ASSET BARS */
-  .asset-tags {
-    display: flex; flex-wrap: wrap; gap: 8px;
+  .asset-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
   }
-  .asset-tag {
-    display: flex; flex-direction: column; gap: 3px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 10px; padding: 10px 14px;
-    min-width: 80px;
+  .asset-row:last-child { margin-bottom: 0; }
+  .asset-name { font-family: var(--mono); font-size: 12px; color: var(--text); width: 64px; flex-shrink: 0; }
+  .bar-track {
+    flex: 1; height: 6px; background: rgba(255,255,255,0.06);
+    border-radius: 3px; overflow: hidden;
   }
-  .asset-tag-sym {
-    font-family: var(--mono); font-size: 11px; font-weight: 700;
-    color: var(--text);
+  .bar-fill {
+    height: 100%; border-radius: 3px;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
   }
-  .asset-tag-val {
-    font-family: var(--mono); font-size: 11px;
-    color: var(--muted2);
-  }
-  .asset-tag-eth { border-color: rgba(79,138,255,0.25); background: rgba(79,138,255,0.06); }
-  .asset-tag-eth .asset-tag-sym { color: #7cb9ff; }
+  .bar-usd { font-family: var(--mono); font-size: 11px; color: var(--muted2); min-width: 110px; text-align: right; flex-shrink: 0; white-space: nowrap; }
 
   /* TX LIST */
   .tx-item {
@@ -535,25 +531,36 @@ function render(data) {
 
 
 
+  const tokenColors = [
+    'linear-gradient(90deg,#34d399,#059669)',
+    'linear-gradient(90deg,#f59e0b,#d97706)',
+    'linear-gradient(90deg,#f87171,#dc2626)',
+    'linear-gradient(90deg,#a855f7,#7c3aed)',
+    'linear-gradient(90deg,#22d3ee,#0891b2)',
+  ];
+
   let assetRows = '';
 
   if (hasETH) {
-    assetRows += `<div class="asset-tag asset-tag-eth">
-      <div class="asset-tag-sym">ETH</div>
-      <div class="asset-tag-val">${fmtETH(data.ethBalance)}</div>
+    const ethUSDStr = data.ethUSD ? fmtUSD(data.ethUSD) : fmtETH(data.ethBalance);
+    assetRows += `<div class="asset-row">
+      <div class="asset-name">ETH</div>
+      <div class="bar-track"><div class="bar-fill" id="bar-eth" style="background:linear-gradient(90deg,#4f8aff,#7c3aed);"></div></div>
+      <div class="bar-usd">${ethUSDStr}</div>
     </div>`;
   }
 
   topTokens.forEach((tok, i) => {
-    const valStr = tok.valueUSD ? ' · ' + fmtUSD(tok.valueUSD) : '';
-    assetRows += `<div class="asset-tag">
-      <div class="asset-tag-sym">${tok.symbol}</div>
-      <div class="asset-tag-val">${fmtTokenBalance(tok.balance)}${valStr}</div>
+    const valStr = tok.valueUSD ? fmtUSD(tok.valueUSD) : fmtTokenBalance(tok.balance) + ' ' + tok.symbol;
+    assetRows += `<div class="asset-row">
+      <div class="asset-name">${tok.symbol}</div>
+      <div class="bar-track"><div class="bar-fill" id="bar-token-${i}" style="background:${tokenColors[i]};"></div></div>
+      <div class="bar-usd">${valStr}</div>
     </div>`;
   });
 
   const assetHTML = assetRows
-    ? `<div class="asset-tags">${assetRows}</div>`
+    ? `<div>${assetRows}</div>`
     : `<div style="color:var(--muted);font-size:13px;">No assets detected.</div>`;
 
   document.getElementById('main-content').innerHTML = `
@@ -625,7 +632,7 @@ function render(data) {
         ${assetHTML}
         <div style="margin-top:20px;text-align:center;">
           <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
-          <div style="margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--muted2);">Prices via <a href="https://www.binance.com/en/register?ref=YOUR_REF_CODE" target="_blank" rel="noopener" style="color:var(--muted2);text-decoration:none;">Binance</a></div>
+          <div style="margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--muted2);">Prices via <a href="https://www.binance.com/en/register?ref=CRYPTOUCAN" target="_blank" rel="noopener" style="color:var(--muted2);text-decoration:none;">Binance</a></div>
         </div>
       </div>
     </div>
@@ -739,7 +746,20 @@ function render(data) {
 
   // Animate bars
   setTimeout(() => {
-    // no bar animation needed (tag layout)
+    // Animate bars
+    const bar = document.getElementById('bar-eth');
+    if (bar) bar.style.width = '100%';
+    const tokens = (data.topTokens || []).slice(0, 5);
+    const maxVal = tokens.length > 0
+      ? Math.max(...tokens.map(t => t.valueUSD || t.balance))
+      : 1;
+    tokens.forEach((tok, i) => {
+      const tb = document.getElementById('bar-token-' + i);
+      if (tb) {
+        const val = tok.valueUSD || tok.balance;
+        tb.style.width = Math.max(8, (val / maxVal) * 85) + '%';
+      }
+    });
   }, 300);
 
   // Enter key on scan input
