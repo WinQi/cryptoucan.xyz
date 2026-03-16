@@ -628,11 +628,13 @@ function render(data) {
     <div class="section">
       <div class="card">
         <div class="card-title">📈 Asset Breakdown</div>
-        ${data.tokenCount > 0 ? `<div style="font-family:var(--mono);font-size:11px;color:var(--muted2);margin-bottom:12px;">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</div>` : ''}
+        ${data.tokenCount > 0 ? `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-family:var(--mono);font-size:11px;color:var(--muted2);">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</span>
+          <a href="https://www.binance.com/en/register?ref=CRYPTOUCAN" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:10px;color:var(--muted2);text-decoration:none;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">Prices via Binance</a>
+        </div>` : ''}
         ${assetHTML}
         <div style="margin-top:20px;text-align:center;">
           <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
-          <a href="https://www.binance.com/en/register?ref=CRYPTOUCAN" target="_blank" rel="noopener" style="display:block;margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--muted2);text-decoration:none;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">Prices via Binance</a>
         </div>
       </div>
     </div>
