@@ -472,7 +472,11 @@ function render(data) {
   document.title = `${seoName} | Ethereum Wallet Analysis — cryptoucan.xyz`;
   document.getElementById('og-title')?.setAttribute('content', `${seoName} | Ethereum Wallet Analysis — cryptoucan.xyz`);
   document.getElementById('og-description')?.setAttribute('content', `ETH balance, tokens, and transaction history for ${data.ensName || addr} — analyzed by cryptoucan.xyz.`);
-  const totalUSD = fmtUSD(data.ethUSD);
+  // Total value = ETH + known token values
+  const tokenTotalUSD = (data.topTokens || []).reduce((sum, t) => sum + (t.valueUSD || 0), 0);
+  const totalUSDRaw = (data.ethUSD || 0) + tokenTotalUSD;
+  const totalUSD = fmtUSD(totalUSDRaw);
+  const hasTokenPrices = (data.topTokens || []).some(t => t.valueUSD);
   const badgeClass = { active: 'badge-active', recent: 'badge-moderate', moderate: 'badge-moderate', dormant: 'badge-dormant', unknown: 'badge-dormant' }[data.activityStatus] || 'badge-dormant';
   const badgeLabel = { active: 'Active', recent: 'Recent', moderate: 'Moderate', dormant: 'Dormant', unknown: 'Unknown' }[data.activityStatus] || '—';
 
@@ -541,9 +545,10 @@ function render(data) {
   }
 
   topTokens.forEach((tok, i) => {
+    const valStr = tok.valueUSD ? ' · ' + fmtUSD(tok.valueUSD) : '';
     assetRows += `<div class="asset-tag">
       <div class="asset-tag-sym">${tok.symbol}</div>
-      <div class="asset-tag-val">${fmtTokenBalance(tok.balance)}</div>
+      <div class="asset-tag-val">${fmtTokenBalance(tok.balance)}${valStr}</div>
     </div>`;
   });
 
@@ -581,7 +586,7 @@ function render(data) {
           <div class="snap-item">
             <div class="snap-label">Total Value</div>
             <div class="snap-value grad">${totalUSD}</div>
-            <div class="snap-sub">${fmtETH(data.ethBalance)} · $${data.ethPrice.toFixed(0)}/ETH</div>
+            <div class="snap-sub">${fmtETH(data.ethBalance)} · $${data.ethPrice.toFixed(0)}/ETH${hasTokenPrices ? " + tokens" : ""}</div>
           </div>
           <div class="snap-item">
             <div class="snap-label">Wallet Age</div>
@@ -620,6 +625,7 @@ function render(data) {
         ${assetHTML}
         <div style="margin-top:20px;text-align:center;">
           <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
+          <div style="margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--muted2);">Prices via <a href="https://www.binance.com/en/register?ref=YOUR_REF_CODE" target="_blank" rel="noopener" style="color:var(--muted2);text-decoration:none;">Binance</a></div>
         </div>
       </div>
     </div>
