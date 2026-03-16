@@ -632,7 +632,7 @@ function render(data) {
         ${assetHTML}
         <div style="margin-top:20px;text-align:center;">
           <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
-          <div style="margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--muted2);">Prices via <a href="https://www.binance.com/en/register?ref=CRYPTOUCAN" target="_blank" rel="noopener" style="color:var(--muted2);text-decoration:none;">Binance</a></div>
+          <a href="https://www.binance.com/en/register?ref=CRYPTOUCAN" target="_blank" rel="noopener" style="display:block;margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--muted2);text-decoration:none;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">Prices via Binance</a>
         </div>
       </div>
     </div>
