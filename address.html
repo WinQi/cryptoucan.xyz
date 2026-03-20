@@ -549,7 +549,7 @@ function render(data) {
     assetRows += `<div class="asset-row">
       <div class="asset-name">ETH</div>
       <div class="bar-track"><div class="bar-fill" id="bar-eth" style="background:linear-gradient(90deg,#4f8aff,#7c3aed);"></div></div>
-      <div class="bar-usd">${ethUSDStr}</div>
+      <div class="bar-usd" style="color:var(--green);">${ethUSDStr}</div>
     </div>`;
   }
 
@@ -606,7 +606,7 @@ function render(data) {
         <div class="snap-grid">
           <div class="snap-item">
             <div class="snap-label">Total Value</div>
-            <div class="snap-value grad">${totalUSD}</div>
+            <div class="snap-value grad">${totalUSD} <span style="font-size:12px;font-weight:400;">USD</span></div>
             <div class="snap-sub">${fmtETH(data.ethBalance)} · $${data.ethPrice.toFixed(0)}/ETH${hasTokenPrices ? " + tokens" : ""}</div>
           </div>
           <div class="snap-item">
