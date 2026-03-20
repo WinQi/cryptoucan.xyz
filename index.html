@@ -11,6 +11,12 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#4f8aff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="cryptoucan">
+<link rel="apple-touch-icon" href="/images/favicon_180.png">
 <style>
   :root {
     --bg:        #0a0f1e;
@@ -1149,6 +1155,13 @@ function toggleFaq(btn) {
     arrow.style.transform = 'rotate(0deg)';
   }
 }
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js');
+    });
+  }
 </script>
 </body>
 </html>

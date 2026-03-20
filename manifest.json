@@ -1,0 +1,51 @@
+{
+  "name": "cryptoucan.xyz — Ethereum Wallet Analyzer",
+  "short_name": "cryptoucan.xyz",
+  "description": "Analyze any Ethereum wallet in seconds. ETH balance, token holdings, transaction history in plain English.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f1e",
+  "theme_color": "#4f8aff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["finance", "utilities"],
+  "icons": [
+    {
+      "src": "/images/favicon_16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon_32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon_96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/favicon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Scan a Wallet",
+      "short_name": "Scan",
+      "description": "Analyze any Ethereum wallet address",
+      "url": "/",
+      "icons": [{ "src": "/images/favicon_96.png", "sizes": "96x96" }]
+    }
+  ]
+}
