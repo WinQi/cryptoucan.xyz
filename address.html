@@ -310,6 +310,8 @@
   }
   .refresh-btn:hover { background: rgba(79,138,255,0.1); }
   @keyframes spin { to { transform: rotate(360deg); } }
+  #binance-link { color: var(--muted2); text-decoration: none; }
+  #binance-link:hover { color: var(--grad1); }
 </style>
 </head>
 <body>
@@ -520,10 +522,11 @@ function render(data) {
   const topTokens = (data.topTokens || []).slice(0, 5);
 
   function fmtTokenBalance(n) {
-    if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
-    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
-    if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
-    if (n >= 1)   return n.toFixed(2);
+    if (n >= 1e12) return (n / 1e12).toFixed(2) + 'T';
+    if (n >= 1e9)  return (n / 1e9).toFixed(2) + 'B';
+    if (n >= 1e6)  return (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e3)  return (n / 1e3).toFixed(2) + 'K';
+    if (n >= 1)    return n.toFixed(2);
     return n.toFixed(4);
   }
 
@@ -551,13 +554,24 @@ function render(data) {
   }
 
   topTokens.forEach((tok, i) => {
-    const valStr = tok.valueUSD ? fmtUSD(tok.valueUSD) : fmtTokenBalance(tok.balance) + ' ' + tok.symbol;
-    assetRows += `<div class="asset-row">
-      <div class="asset-name">${tok.symbol}</div>
-      <div class="bar-track"><div class="bar-fill" id="bar-token-${i}" style="background:${tokenColors[i]};"></div></div>
-      <div class="bar-usd">${valStr}</div>
-    </div>`;
+    const symShort = tok.symbol.length > 6 ? tok.symbol.slice(0, 6) + '...' : tok.symbol;
+    const valStr = tok.valueUSD ? fmtUSD(tok.valueUSD) : fmtTokenBalance(tok.balance) + ' ' + symShort;
+    const symDisplay = symShort;
+    const row = '<div class="asset-row">'
+      + '<div class="asset-name">' + symDisplay + '</div>'
+      + '<div class="bar-track"><div class="bar-fill" id="bar-token-' + i + '" style="background:' + tokenColors[i] + ';"></div></div>'
+      + '<div class="bar-usd">' + valStr + '</div>'
+      + '</div>';
+    assetRows += row;
   });
+
+  const tokenPlural = data.tokenCount > 1 ? 's' : '';
+  const tokenHeaderHTML = data.tokenCount > 0
+    ? '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
+      + '<span style="font-family:var(--mono);font-size:11px;color:var(--muted2);">Total ' + data.tokenCount + ' token' + tokenPlural + ' detected</span>'
+      + '<a href="https://www.binance.com/en/register?ref=CRYPTOUCAN" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:10px;color:var(--muted2);text-decoration:none;" id="binance-link">Prices via Binance</a>'
+      + '</div>'
+    : '';
 
   const assetHTML = assetRows
     ? `<div>${assetRows}</div>`
@@ -628,10 +642,7 @@ function render(data) {
     <div class="section">
       <div class="card">
         <div class="card-title">📈 Asset Breakdown</div>
-        ${data.tokenCount > 0 ? `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <span style="font-family:var(--mono);font-size:11px;color:var(--muted2);">Total ${data.tokenCount} token${data.tokenCount > 1 ? 's' : ''} detected</span>
-          <a href="https://www.binance.com/en/register?ref=CRYPTOUCAN" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:10px;color:var(--muted2);text-decoration:none;" onmouseover="this.style.color='var(--grad1)'" onmouseout="this.style.color='var(--muted2)'">Prices via Binance</a>
-        </div>` : ''}
+        ${tokenHeaderHTML}
         ${assetHTML}
         <div style="margin-top:20px;text-align:center;">
           <a href="https://etherscan.io/address/${addr}#asset-multichain" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:0.05em;">View all on Etherscan ↗</a>
