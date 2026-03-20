@@ -15,7 +15,7 @@
 <meta name="theme-color" content="#4f8aff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="cryptoucan">
+<meta name="apple-mobile-web-app-title" content="cryptoucan.xyz">
 <link rel="apple-touch-icon" href="/images/favicon_180.png">
 <style>
   :root {
@@ -654,6 +654,16 @@
     <p class="hero-tagline">Blockchain Data<br><span class="white">Human Language</span></p>
     <p class="hero-sub">Any address. Instant insights.</p>
 
+    <!-- PWA Install Button -->
+    <div id="pwa-install-wrap" style="display:none;margin-top:20px;">
+      <button id="pwa-install-btn" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:10px 18px;cursor:pointer;transition:all 0.2s;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:0.03em;"
+        onmouseover="this.style.borderColor='rgba(79,138,255,0.4)';this.style.color='var(--text)'"
+        onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='var(--muted)'">
+        <img src="/images/pwa_logo.png" style="width:18px;height:18px;object-fit:contain;" alt="Install">
+        Add to Home Screen
+      </button>
+    </div>
+
     <!-- SEARCH -->
     <div class="search-card">
       <span class="search-icon">⬡</span>
@@ -722,7 +732,43 @@
       </a>
     `).join('');
   })();
-  </script>
+  
+// PWA Install prompt
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('pwa-install-wrap').style.display = 'block';
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) {
+    btn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        document.getElementById('pwa-install-wrap').style.display = 'none';
+      }
+      deferredPrompt = null;
+    });
+  }
+});
+
+// Hide if already installed (standalone mode)
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+  const wrap = document.getElementById('pwa-install-wrap');
+  if (wrap) wrap.style.display = 'none';
+}
+
+window.addEventListener('appinstalled', () => {
+  const wrap = document.getElementById('pwa-install-wrap');
+  if (wrap) wrap.style.display = 'none';
+  deferredPrompt = null;
+});
+</script>
 
   <div class="divider"></div>
 
