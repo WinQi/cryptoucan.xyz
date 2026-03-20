@@ -545,7 +545,7 @@ function render(data) {
   let assetRows = '';
 
   if (hasETH) {
-    const ethUSDStr = data.ethUSD ? fmtUSD(data.ethUSD) : fmtETH(data.ethBalance);
+    const ethUSDStr = data.ethUSD ? fmtUSD(data.ethUSD) + ' USD' : fmtETH(data.ethBalance);
     assetRows += `<div class="asset-row">
       <div class="asset-name">ETH</div>
       <div class="bar-track"><div class="bar-fill" id="bar-eth" style="background:linear-gradient(90deg,#4f8aff,#7c3aed);"></div></div>
@@ -560,7 +560,7 @@ function render(data) {
     const row = '<div class="asset-row">'
       + '<div class="asset-name">' + symDisplay + '</div>'
       + '<div class="bar-track"><div class="bar-fill" id="bar-token-' + i + '" style="background:' + tokenColors[i] + ';"></div></div>'
-      + '<div class="bar-usd">' + valStr + '</div>'
+      + '<div class="bar-usd' + (tok.valueUSD ? '" style="color:var(--green)' : '') + '">' + valStr + '</div>'
       + '</div>';
     assetRows += row;
   });
