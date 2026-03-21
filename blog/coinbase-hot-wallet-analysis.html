@@ -19,6 +19,12 @@
 <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0a0f1e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="cryptoucan.xyz">
+<link rel="apple-touch-icon" href="/images/favicon_180.png">
 <style>
   :root {
     --bg:        #0a0f1e;
@@ -244,6 +250,14 @@
   footer a { color: var(--muted); text-decoration: none; }
   footer a:hover { color: var(--grad1); }
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZNW6K2XX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3ZNW6K2XX4');
+</script>
 </head>
 <body>
 <div class="bg-orb bg-orb-1"></div>
@@ -257,7 +271,7 @@
 </nav>
 <div class="wrap">
   <div class="article-meta">
-    <span class="article-tag">Wallet Analysis</span>
+    <span class="article-tag" style="color:var(--grad1);border-color:var(--grad1)33;background:var(--grad1)11;">Wallet Analysis</span>
     <span style="margin-top:6px;">March 17, 2026</span>
     <span>6 min read</span>
   </div>
@@ -296,8 +310,8 @@
     <a href="/address/0x71660c4005ba85c37ccec55d0c4493e66fe775d3" class="btn-primary">Analyze Coinbase Hot Wallet →</a>
   </div>
   <div class="related"><div class="related-title">More from the blog</div><div class="related-grid">
-    <a href="/blog/binance-cold-wallet-analysis" class="related-card"><div class="related-card-tag">Wallet Analysis</div><div class="related-card-title">Inside Binance's Cold Wallet</div></a>
-    <a href="/blog/what-is-a-crypto-whale" class="related-card"><div class="related-card-tag">Education</div><div class="related-card-title">What is a crypto whale?</div></a>
+    <a href="/blog/binance-cold-wallet-analysis" class="related-card"><div class="related-card-tag" style="color:var(--grad1);">Wallet Analysis</div><div class="related-card-title">Inside Binance's Cold Wallet</div></a>
+    <a href="/blog/what-is-a-crypto-whale" class="related-card"><div class="related-card-tag" style="color:#22d3ee;">Education</div><div class="related-card-title">What is a crypto whale?</div></a>
   </div></div>
 </div>
 <footer>
@@ -319,5 +333,12 @@
     </a>
   </div>
 </footer>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js');
+    });
+  }
+</script>
 </body>
 </html>

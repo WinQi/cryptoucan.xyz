@@ -12,6 +12,12 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon_96.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_180.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0a0f1e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="cryptoucan.xyz">
+<link rel="apple-touch-icon" href="/images/favicon_180.png">
 <style>
   :root {
     --bg:           #0a0f1e;
@@ -148,6 +154,14 @@
   footer a { color: var(--muted); text-decoration: none; }
   footer a:hover { color: var(--grad1); }
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZNW6K2XX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3ZNW6K2XX4');
+</script>
 </head>
 <body>
 
@@ -368,7 +382,7 @@
     <div class="card">
       <div class="card-title">✉️ Contact Us</div>
       <div class="prose">
-        <p>If you have any questions or suggestions about these Terms and Conditions, please contact us at <a href="mailto:aelab.my@gmail.com" style="color:var(--grad1);text-decoration:none;"><span class="__cf_email__" data-cfemail="6001050c01024e0d1920070d01090c4e030f0d">aelab.my@gmail.com</span></a>.</p>
+        <p>If you have any questions or suggestions about these Terms and Conditions, please contact us at <a href="/cdn-cgi/l/email-protection#7b1a1e171a195516023b1c161a121755181416" style="color:var(--grad1);text-decoration:none;"><span class="__cf_email__" data-cfemail="6001050c01024e0d1920070d01090c4e030f0d">[email&#160;protected]</span></a>.</p>
       </div>
     </div>
   </div>
@@ -393,5 +407,12 @@
   </footer>
 
 </div>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js');
+    });
+  }
+</script>
 </body>
 </html>
